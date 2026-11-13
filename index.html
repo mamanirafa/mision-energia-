@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Misión Energía Austral · Compensación 2° año</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   MISIÓN ENERGÍA AUSTRAL · estilos
+   Paleta: noche austral (navy), Canal Beagle (teal), chispa (ámbar)
+   =========================================================== */
+:root{
+  --bg:#0a1726; --bg2:#0f2135; --panel:#132a42; --panel2:#18334f; --line:#28476a;
+  --ink:#eef4f8; --ink2:#a9bfd1; --teal:#2ec4b6; --teal-soft:#123f45; --amber:#ffb703; --amber-soft:#3d3214;
+  --coral:#ff6b6b; --coral-soft:#3f1f27; --ok:#4ade80; --ok-soft:#163a2a; --violet:#a78bfa; --violet-soft:#2a2547;
+  --cream:#fff8e7;
+  --t-energia:#ffb703; --t-centrales:#2ec4b6; --t-sistemas:#a78bfa; --t-proyecto:#ff8fab;
+  --r:14px; --shadow:0 10px 30px -14px rgba(0,0,0,.7);
+  --f-title:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:radial-gradient(1200px 600px at 80% -10%,#173a5c 0%,transparent 60%),var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1.05rem;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-title);line-height:1.15;margin:0 0 .5rem;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:clamp(1.4rem,4vw,1.9rem);font-weight:800}
+h3{font-size:1.18rem}
+p{margin:0 0 .85rem}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.muted{color:var(--ink2)} .small{font-size:.9rem} .center{text-align:center}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center} .spacer{flex:1}
+
+/* ---------- HUD ---------- */
+.hud{position:sticky;top:0;z-index:30;background:rgba(10,23,38,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hud-in{max-width:860px;margin:0 auto;padding:.5rem 1rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.brand{font-family:var(--f-title);font-weight:800;display:flex;align-items:center;gap:.4rem;white-space:nowrap}
+.brand b{color:var(--amber)}
+.chips{margin-left:auto;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .65rem;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-size:.88rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip.score{background:var(--amber-soft);border-color:#6b5517;color:var(--amber);font-weight:700}
+.chip.score.bump{animation:bump .5s}
+.chip.streak{color:#ffa94d}
+.chip.sync-ok{color:var(--ok)} .chip.sync-wait{color:var(--amber)} .chip.sync-off{color:var(--ink2)}
+.icon-btn{background:none;border:1px solid var(--line);border-radius:999px;padding:.2rem .6rem;cursor:pointer;color:var(--ink2);font-size:.85rem}
+.icon-btn:hover{color:var(--ink);border-color:var(--ink2)}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+.lvlbar{max-width:860px;margin:0 auto;padding:0 1rem .55rem}
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:.35rem}
+.phase{font-size:.75rem;text-align:center;padding:.25rem .2rem;border-radius:8px;background:var(--panel);color:var(--ink2);border:1px solid transparent}
+.phase.done{background:var(--teal-soft);color:var(--teal)}
+.phase.now{border-color:var(--amber);color:var(--ink);font-weight:700}
+
+/* ---------- Layout ---------- */
+main{max-width:860px;margin:0 auto;padding:1.25rem 1rem 4rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:1.25rem;box-shadow:var(--shadow);margin-bottom:1rem}
+.panel.edge{border-left:6px solid var(--amber)}
+.kicker{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--amber);font-weight:700;margin-bottom:.2rem}
+footer{max-width:860px;margin:0 auto;padding:1rem;color:var(--ink2);font-size:.85rem;border-top:1px solid var(--line)}
+
+/* ---------- Botones ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;border:2px solid transparent;border-radius:12px;padding:.7rem 1.2rem;min-height:46px;background:var(--amber);color:#1b1300;font-weight:700;cursor:pointer;text-decoration:none;line-height:1.2}
+.btn:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;filter:none}
+.btn.teal{background:var(--teal);color:#062320}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink2)}
+.btn.sm{min-height:36px;padding:.4rem .8rem;font-size:.92rem}
+.linkish{background:none;border:none;padding:0;color:var(--teal);text-decoration:underline;cursor:pointer;font-weight:700}
+
+/* ---------- Portada ---------- */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:1rem;align-items:center;margin:1rem 0 1.5rem}
+.hero .lede{font-size:1.12rem;color:var(--ink2)}
+.hero svg{width:100%;max-width:300px;justify-self:center}
+@media (max-width:640px){.hero{grid-template-columns:1fr}.hero svg{max-width:200px}}
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin:.8rem 0}
+.rule{background:var(--panel2);border-radius:12px;padding:.75rem .9rem;font-size:.95rem}
+.rule b{display:block;font-family:var(--f-title);color:var(--amber)}
+@media (max-width:560px){.rules{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:.3rem;margin:.6rem 0}
+.input{background:var(--bg2);border:2px solid var(--line);border-radius:10px;padding:.7rem .85rem;width:100%}
+.input:focus{border-color:var(--teal);outline:none}
+.name-preview{font-family:var(--f-title);font-size:1.5rem;font-weight:800;color:var(--amber);min-height:2rem}
+
+/* ---------- Mapa ---------- */
+.map{display:grid;gap:.8rem}
+.lvl-card{display:grid;grid-template-columns:72px 1fr auto;gap:1rem;align-items:center;background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:1rem;text-align:left;cursor:pointer;width:100%;transition:transform .15s,border-color .15s}
+.lvl-card:hover:not([disabled]){transform:translateY(-2px);border-color:var(--amber)}
+.lvl-card[disabled]{opacity:.45;cursor:not-allowed}
+.lvl-card.done{border-color:var(--teal)}
+.lvl-card.current{border-color:var(--amber);box-shadow:0 0 0 4px var(--amber-soft)}
+.lvl-ico{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:2rem;background:var(--panel2);border:2px solid var(--line)}
+.lvl-card.done .lvl-ico{background:var(--teal-soft);border-color:var(--teal)}
+.stars{color:var(--amber);letter-spacing:.1em;font-size:1.1rem;white-space:nowrap}
+.stars .off{color:var(--line)}
+@media (max-width:560px){.lvl-card{grid-template-columns:52px 1fr;gap:.7rem}.lvl-ico{width:52px;height:52px;font-size:1.5rem}.lvl-card>div:last-child{grid-column:2}}
+.lvl-meta{font-size:.85rem;color:var(--ink2)}
+.tema-dots{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.3rem}
+.tdot{font-size:.72rem;padding:.08rem .5rem;border-radius:999px;border:1px solid currentColor}
+.t-energia{color:var(--t-energia)} .t-centrales{color:var(--t-centrales)} .t-sistemas{color:var(--t-sistemas)} .t-proyecto{color:var(--t-proyecto)}
+
+/* ---------- Lectura ---------- */
+.reading-sec{border-left:5px solid var(--sec,var(--amber));padding-left:1rem;margin:1.2rem 0}
+.reading-sec h3{color:var(--sec,var(--amber))}
+.reading-sec ul{margin:.2rem 0 .8rem;padding-left:1.2rem}
+.reading-sec li{margin:.2rem 0}
+.box{background:var(--panel2);border-radius:12px;padding:.75rem .9rem;margin:.7rem 0;font-size:.97rem}
+.box.key{border:1px dashed var(--amber)}
+.box.local{border:1px dashed var(--teal)}
+.box b.lab{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--amber)}
+.box.local b.lab{color:var(--teal)}
+.tbl{width:100%;border-collapse:collapse;font-size:.93rem;margin:.5rem 0 .8rem}
+.tbl th,.tbl td{border:1px solid var(--line);padding:.35rem .5rem;text-align:left;vertical-align:top}
+.tbl th{background:var(--panel2);color:var(--amber)}
+.tblwrap{overflow-x:auto}
+.got-it{margin-top:.3rem}
+.got-it.on{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.flow{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin:.5rem 0 .9rem}
+.flow span{background:var(--panel2);border-radius:8px;padding:.25rem .55rem;font-size:.88rem}
+.flow i{font-style:normal;color:var(--amber)}
+
+/* ---------- Opciones / desafíos ---------- */
+.opts{display:grid;gap:.55rem;margin:.8rem 0}
+.opt{text-align:left;background:var(--panel2);border:2px solid var(--line);border-radius:12px;padding:.75rem .9rem;cursor:pointer;min-height:48px;transition:border-color .12s,transform .12s}
+.opt:hover:not([disabled]){border-color:var(--teal);transform:translateX(2px)}
+.opt[disabled]{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--coral);background:var(--coral-soft)}
+.opt.sel{border-color:var(--amber)}
+.opts.two{grid-template-columns:1fr 1fr}
+.qhead{display:flex;justify-content:space-between;gap:.5rem;align-items:center;margin-bottom:.4rem;flex-wrap:wrap}
+.qnum{font-size:.85rem;color:var(--ink2)}
+.qbar{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden;margin-bottom:1rem}
+.qbar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--amber));transition:width .4s}
+.qtext{font-size:1.15rem;font-weight:700}
+.fb{border-radius:12px;padding:.75rem .9rem;margin:.7rem 0;font-size:.97rem}
+.fb.ok{background:var(--ok-soft);border:1px solid var(--ok)}
+.fb.bad{background:var(--coral-soft);border:1px solid var(--coral)}
+.fb.warn{background:var(--amber-soft);border:1px solid var(--amber)}
+.fb.info{background:var(--teal-soft);border:1px solid var(--teal)}
+.pool{display:flex;flex-wrap:wrap;gap:.45rem;min-height:48px;padding:.5rem;border:2px dashed var(--line);border-radius:12px;margin:.6rem 0}
+.tok{background:var(--panel2);border:2px solid var(--line);border-radius:10px;padding:.45rem .7rem;cursor:pointer;font-size:.95rem}
+.tok.sel{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-soft)}
+.tok.ok{border-color:var(--ok)} .tok.bad{border-color:var(--coral);background:var(--coral-soft)}
+.buckets{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.6rem}
+.bucket{background:var(--bg2);border:2px solid var(--line);border-radius:12px;padding:.6rem;min-height:110px;cursor:pointer;text-align:left}
+.bucket:hover{border-color:var(--teal)}
+.bucket h4{margin:0 0 .4rem;font-family:var(--f-title);font-size:1rem;color:var(--teal)}
+.bucket .tok{display:inline-block;margin:.15rem}
+.buckets + .btn,.buckets + .fb{margin-top:.8rem}
+.order-list{list-style:none;padding:0;margin:.6rem 0;display:grid;gap:.45rem}
+.order-item{display:flex;align-items:center;gap:.5rem;background:var(--panel2);border:2px solid var(--line);border-radius:12px;padding:.5rem .6rem}
+.order-item.ok{border-color:var(--ok)} .order-item.bad{border-color:var(--coral)}
+.order-item .n{width:28px;height:28px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;font-weight:700;flex:none}
+.order-item .tx{flex:1}
+.mv{background:var(--bg2);border:1px solid var(--line);border-radius:8px;width:36px;height:36px;cursor:pointer}
+.mv:hover{border-color:var(--teal)}
+.floater{position:fixed;z-index:60;font-family:var(--f-title);font-weight:800;font-size:1.6rem;color:var(--amber);pointer-events:none;animation:floatup 1s ease-out forwards}
+@keyframes floatup{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-70px)}}
+.shake{animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* ---------- Interactivos ---------- */
+.memo{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
+@media (max-width:560px){.memo{grid-template-columns:repeat(2,1fr)}}
+.mcard{aspect-ratio:4/3;border-radius:12px;border:2px solid var(--line);background:linear-gradient(135deg,var(--panel2),var(--bg2));cursor:pointer;display:grid;place-items:center;padding:.4rem;font-size:.85rem;text-align:center;line-height:1.25}
+.mcard.back{font-size:1.8rem;color:var(--amber)}
+.mcard.up{background:var(--cream);color:#132a42;border-color:var(--amber)}
+.mcard.term.up{font-family:var(--f-title);font-weight:800;font-size:1rem}
+.mcard.matched{background:var(--ok-soft);color:var(--ink);border-color:var(--ok);cursor:default}
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem}
+.tab{background:var(--panel2);border:2px solid var(--line);border-radius:999px;padding:.35rem .8rem;cursor:pointer;font-size:.92rem}
+.tab.on{border-color:var(--amber);color:var(--amber)}
+.tab.done::after{content:" ✓";color:var(--ok)}
+.chain{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;min-height:52px;padding:.5rem;background:var(--bg2);border-radius:12px;margin:.6rem 0}
+.chain .slot{border:2px dashed var(--line);border-radius:10px;padding:.4rem .6rem;min-width:90px;text-align:center;font-size:.88rem;color:var(--ink2)}
+.chain .slot.fill{border-style:solid;border-color:var(--teal);color:var(--ink);background:var(--teal-soft)}
+.chain i{font-style:normal;color:var(--amber)}
+.xray{position:relative;background:var(--bg2);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.xray svg{display:block;width:100%;height:auto}
+.hs{cursor:pointer}
+.hs circle{fill:var(--amber);stroke:#1b1300;stroke-width:2;transition:r .15s}
+.hs text{fill:#1b1300;font-weight:800;font-size:15px;font-family:var(--f-body);pointer-events:none}
+.hs.done circle{fill:var(--ok)}
+.hs.sel circle{fill:#fff}
+.hs:hover circle,.hs:focus circle{r:17}
+.hs-list{display:flex;flex-wrap:wrap;gap:.35rem;margin:.6rem 0}
+.scard{border:2px solid var(--line);border-radius:14px;background:var(--panel2);padding:.8rem;cursor:pointer;text-align:left;width:100%}
+.scard.on{border-color:var(--amber)}
+.scard.done{border-color:var(--ok)}
+.scards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.6rem}
+.stagebtns{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.4rem;margin:.6rem 0}
+.prog-note{font-size:.9rem;color:var(--ink2);margin-top:.4rem}
+
+/* ---------- Informe ---------- */
+.big-score{font-family:var(--f-title);font-size:3rem;font-weight:800;color:var(--amber);line-height:1}
+.tema-row{display:grid;grid-template-columns:1fr auto;gap:.3rem .8rem;padding:.75rem 0;border-bottom:1px solid var(--line)}
+.tema-row:last-child{border-bottom:none}
+.meter{grid-column:1/-1;height:8px;background:var(--bg2);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%}
+.status{font-weight:700;font-size:.9rem;white-space:nowrap}
+.st-ok{color:var(--ok)} .st-mid{color:var(--amber)} .st-low{color:var(--coral)}
+.advice{grid-column:1/-1;font-size:.93rem;color:var(--ink2)}
+
+/* ---------- Certificado ---------- */
+.cert{background:var(--cream);color:#132a42;border-radius:6px;padding:2.2rem 2rem;text-align:center;border:10px double #1f4e79;position:relative;font-family:var(--f-body)}
+.cert h1{font-family:var(--f-title);color:#1f4e79;font-size:clamp(1.6rem,5vw,2.4rem);margin:.3rem 0}
+.cert .cname{font-family:var(--f-title);font-size:clamp(1.6rem,5vw,2.3rem);font-weight:800;color:#0f766e;border-bottom:2px solid #1f4e79;display:inline-block;padding:0 1rem .2rem;margin:.4rem 0 .8rem}
+.cert .cscore{display:flex;justify-content:center;gap:1.4rem;flex-wrap:wrap;margin:1rem 0}
+.cert .cscore div{min-width:90px}
+.cert .cscore b{display:block;font-family:var(--f-title);font-size:1.6rem;color:#b45309}
+.cert .sign{display:flex;justify-content:space-around;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.cert .sign div{border-top:1px solid #132a42;padding-top:.3rem;min-width:180px;font-size:.9rem}
+.cert .code{font-size:.8rem;color:#4b5d6b;margin-top:1rem}
+@media print{
+  body{background:#fff}
+  body *{visibility:hidden}
+  #cert, #cert *{visibility:visible}
+  #cert{position:absolute;left:0;top:0;width:100%;margin:0}
+  @page{size:A4 landscape;margin:12mm}
+}
+</style>
+</head>
+<body>
+<div id="live" class="sr-only" aria-live="polite"></div>
+<div id="root"></div>
+<script>
+/* ===========================================================
+   MISIÓN ENERGÍA AUSTRAL · CONTENIDOS Y CONFIGURACIÓN
+   Todo lo que se puede editar sin tocar el motor está acá.
+   =========================================================== */
+window.CONFIG = {
+  titulo: "Misión Energía Austral",
+  subtitulo: "Etapa de compensación · Educación Tecnológica",
+  curso: "2° año",
+  escuela: "Colegio Integral de Educación Ushuaia",
+  docente: "Prof. Rafael Mamani",
+  // Pegá acá la URL de tu aplicación web de Apps Script (termina en /exec).
+  // Si queda vacía, el juego funciona igual pero no guarda en Sheets.
+  sheetsUrl: "",
+  preguntasPorNivel: 10,
+  puntosPrimerIntento: 10,
+  puntosSegundoIntento: 5,
+  minimoParaAvanzar: 60,   // puntos sobre 100 por nivel
+  intentosMaximos: 3,      // por nivel
+  storageKey: "mision-energia-austral-v1"
+};
+
+/* Los 4 temas de la compensación: aparecen en TODOS los niveles */
+window.TEMAS = {
+  energia:   { nombre: "Procesos de transformación de la energía", corto: "Energía", ico: "⚡" },
+  centrales: { nombre: "Centrales de generación de energía eléctrica", corto: "Centrales", ico: "🏭" },
+  sistemas:  { nombre: "Sistemas técnicos en una central", corto: "Sistemas técnicos", ico: "⚙️" },
+  proyecto:  { nombre: "Etapas del proyecto tecnológico", corto: "Proyecto tecnológico", ico: "🧭" }
+};
+
+window.ETAPAS = ["Identificación del problema", "Búsqueda de información", "Diseño y análisis del producto", "Organización y gestión", "Planificación", "Construcción del producto o prototipo", "Evaluación y perfeccionamiento"];
+
+window.NIVELES = [
+/* =================================================================
+   NIVEL 1 · RECONOCER
+   ================================================================= */
+{
+  id: 1, nombre: "Reconocer", rango: "Explorador/a", ico: "🔍",
+  mision: "Primera misión: reconocer las piezas del mapa. Vas a identificar los conceptos básicos de los cuatro temas.",
+  lectura: [
+    { tema: "energia", titulo: "⚡ Energía, fuentes y recursos", html: `
+<p>La <b>energía</b> es la <b>capacidad de un cuerpo para realizar un trabajo</b>. Aparece en distintas formas: <b>mecánica</b> (cinética por el movimiento, potencial por la posición), <b>térmica</b>, <b>química</b>, <b>luminosa</b>, <b>sonora</b>, <b>eléctrica</b> y <b>nuclear</b>.</p>
+<p>Una <b>fuente de energía</b> es el fenómeno natural o el material del que obtenemos energía: el viento, el sol, el agua de un río, el gas natural, el uranio. La <b>cantidad de energía disponible</b> de una fuente se llama <b>recurso energético</b>.</p>
+<div class="box key"><b class="lab">Para no confundir</b>El viento del Canal Beagle es una <b>fuente</b>. Cuánto viento aprovechable hay en Ushuaia es el <b>recurso energético</b>.</div>
+<p>Según si se agotan o no, las fuentes son:</p>
+<ul><li><b>Renovables</b>: la naturaleza las repone y son prácticamente inagotables (agua, viento, sol, biomasa).</li>
+<li><b>No renovables</b>: tardaron millones de años en formarse y se agotan al usarlas (carbón, petróleo, gas natural, uranio).</li></ul>` },
+    { tema: "centrales", titulo: "🏭 ¿Qué es una central eléctrica?", html: `
+<p>Una <b>central de generación eléctrica</b> es una instalación que <b>transforma alguna forma de energía en electricidad</b>. Conocimos seis tipos:</p>
+<div class="tblwrap"><table class="tbl"><tr><th>Central</th><th>Fuente que usa</th><th>Medio técnico que la identifica</th></tr>
+<tr><td>💧 Hidroeléctrica</td><td>Agua embalsada o de un río</td><td>Presa, embalse, turbina hidráulica</td></tr>
+<tr><td>🔥 Termoeléctrica</td><td>Gas natural, carbón o petróleo</td><td>Caldera, turbina de vapor, chimenea</td></tr>
+<tr><td>⚛️ Nuclear</td><td>Uranio</td><td>Reactor, barras de combustible</td></tr>
+<tr><td>🌬️ Eólica</td><td>Viento</td><td>Aerogenerador: aspas, góndola, torre</td></tr>
+<tr><td>☀️ Solar fotovoltaica</td><td>Luz del sol</td><td>Paneles (celdas fotovoltaicas), inversor</td></tr>
+<tr><td>🌿 Biomasa</td><td>Materia orgánica</td><td>Almacén de biomasa, caldera</td></tr></table></div>
+<p>Casi todas tienen dos protagonistas: la <b>turbina</b> (gira) y el <b>generador eléctrico</b> (convierte ese giro en electricidad).</p>` },
+    { tema: "sistemas", titulo: "⚙️ Sistemas y sistemas técnicos", html: `
+<p>Un <b>sistema</b> es un <b>conjunto de elementos relacionados entre sí que funcionan en función de un objetivo común</b>. Las partes sueltas no logran lo que logra el conjunto.</p>
+<p>En Tecnología estudiamos los <b>sistemas técnicos</b>: los <b>creados por el ser humano con fines utilitarios</b>. Los que vimos son:</p>
+<ul><li><b>Mecánico</b>: transmite fuerzas y/o movimiento.</li>
+<li><b>Hidráulico</b>: transmite fuerzas y/o movimiento usando un líquido (aceite, agua).</li>
+<li><b>Hídrico</b>: almacena y transporta líquidos.</li>
+<li><b>De control</b>: controla o mantiene estables valores de materia, energía o información.</li>
+<li><b>Informático</b>: hardware y software que procesan datos para obtener información.</li>
+<li><b>Eléctrico</b>: genera, transforma o conduce la corriente eléctrica.</li></ul>` },
+    { tema: "proyecto", titulo: "🧭 El proyecto tecnológico", html: `
+<p>Un <b>proyecto tecnológico</b> es un <b>proceso de trabajo ordenado para resolver un problema o responder a una necesidad</b>, usando conocimientos, materiales, herramientas, técnicas y organización.</p>
+<p>Tiene <b>siete etapas</b>, en este orden:</p>
+<div class="flow"><span>1. Identificación del problema</span><i>›</i><span>2. Búsqueda de información</span><i>›</i><span>3. Diseño y análisis del producto</span><i>›</i><span>4. Organización y gestión</span><i>›</i><span>5. Planificación</span><i>›</i><span>6. Construcción</span><i>›</i><span>7. Evaluación y perfeccionamiento</span></div>
+<div class="box key"><b class="lab">Truco para recordar</b>Primero pensás (1, 2, 3), después te organizás (4, 5), después hacés (6) y siempre revisás (7).</div>` }
+  ],
+  interactivo: { tipo: "memo", titulo: "Memotest de conceptos",
+    intro: "Dá vuelta dos cartas por turno y encontrá cada concepto con su definición. Practicás sin perder puntos.",
+    pares: [
+      ["energia", "Energía", "Capacidad de un cuerpo para realizar un trabajo"],
+      ["energia", "Recurso energético", "Cantidad de energía disponible de una fuente"],
+      ["centrales", "Central eléctrica", "Instalación que transforma una forma de energía en electricidad"],
+      ["centrales", "Generador eléctrico", "Convierte el movimiento de rotación en electricidad"],
+      ["sistemas", "Sistema", "Elementos relacionados que funcionan con un objetivo común"],
+      ["sistemas", "Sistema técnico", "Sistema creado por el ser humano con fines utilitarios"],
+      ["proyecto", "Proyecto tecnológico", "Proceso ordenado para resolver un problema o necesidad"],
+      ["proyecto", "Planificación", "Etapa en la que se ordenan las acciones en el tiempo"]
+    ] },
+  consejos: {
+    energia: "Repasá las definiciones de energía, fuente y recurso energético, y la diferencia entre fuentes renovables y no renovables.",
+    centrales: "Repasá la tabla de los seis tipos de centrales: qué fuente usa cada una y qué medio técnico la identifica.",
+    sistemas: "Repasá qué es un sistema, qué es un sistema técnico y la definición de cada tipo (mecánico, hidráulico, hídrico, de control, informático, eléctrico).",
+    proyecto: "Repasá qué es un proyecto tecnológico y memorizá las siete etapas en orden."
+  },
+  banco: [
+    { t: "mc", tema: "energia", q: "En Tecnología, ¿qué es la energía?", o: ["La capacidad de un cuerpo para realizar un trabajo", "La electricidad que llega a las casas", "Un combustible como el gas", "La fuerza que tiene el viento"], a: 0, e: "La energía es la capacidad de un cuerpo para realizar un trabajo. La electricidad es solo una de sus formas." },
+    { t: "sort", tema: "energia", q: "Clasificá estas fuentes de energía.", b: ["Renovable", "No renovable"], i: [["Viento del Canal Beagle", 0], ["Gas natural", 1], ["Agua del Río Olivia", 0], ["Uranio", 1], ["Restos de poda (biomasa)", 0], ["Petróleo", 1], ["Luz solar", 0], ["Carbón mineral", 1]], e: "Las renovables se reponen naturalmente; las no renovables tardaron millones de años en formarse y se agotan." },
+    { t: "mc", tema: "energia", q: "La cantidad de energía disponible de una fuente se llama…", o: ["Recurso energético", "Energía final", "Fuente alternativa", "Central eléctrica"], a: 0, e: "Recurso energético = cuánta energía hay disponible en una fuente." },
+    { t: "mc", tema: "energia", q: "¿Qué forma de energía tiene el viento?", o: ["Mecánica cinética (por su movimiento)", "Química", "Nuclear", "Sonora"], a: 0, e: "El viento es aire en movimiento: tiene energía mecánica cinética." },
+    { t: "sort", tema: "centrales", q: "¿A qué central pertenece cada medio técnico?", b: ["Hidroeléctrica", "Nuclear", "Eólica", "Solar"], i: [["Presa y embalse", 0], ["Turbina hidráulica", 0], ["Reactor", 1], ["Barras de uranio", 1], ["Góndola", 2], ["Aspas y rotor", 2], ["Celdas fotovoltaicas", 3], ["Inversor", 3]], e: "Cada central tiene medios técnicos que la identifican según la fuente que aprovecha." },
+    { t: "mc", tema: "centrales", q: "¿Qué es una central de generación eléctrica?", o: ["Una instalación que transforma alguna forma de energía en electricidad", "Un lugar donde se guarda la electricidad", "Una red de cables que llega a las casas", "Una empresa que cobra la luz"], a: 0, e: "Las centrales transforman energía (del agua, el viento, el gas, etc.) en electricidad." },
+    { t: "mc", tema: "centrales", q: "¿Qué fuente de energía usa una central nuclear?", o: ["Uranio", "Gas natural", "Agua de un embalse", "Restos orgánicos"], a: 0, e: "La central nuclear aprovecha la energía liberada al dividir átomos de uranio (fisión)." },
+    { t: "mc", tema: "centrales", q: "Los aerogeneradores son el medio técnico principal de la central…", o: ["Eólica", "Solar", "Hidroeléctrica", "De biomasa"], a: 0, e: "El aerogenerador (torre, aspas, góndola) captura la energía del viento." },
+    { t: "mc", tema: "sistemas", q: "¿Qué es un sistema?", o: ["Un conjunto de elementos relacionados que funcionan con un objetivo común", "Una máquina muy grande", "Un grupo de piezas guardadas en una caja", "Un programa de computadora"], a: 0, e: "Lo clave es la relación entre los elementos y el objetivo común." },
+    { t: "mc", tema: "sistemas", q: "Los sistemas técnicos son…", o: ["Sistemas creados por el ser humano con fines utilitarios", "Todos los sistemas de la naturaleza", "Solo las computadoras", "Sistemas que no usan energía"], a: 0, e: "Un sistema técnico lo crea el ser humano para resolver una necesidad." },
+    { t: "mc", tema: "sistemas", q: "Un sistema mecánico es un sistema de…", o: ["Transmisión de fuerzas y/o movimiento", "Almacenamiento de agua", "Procesamiento de datos", "Control de la temperatura"], a: 0, e: "Ejemplo: la bicicleta transmite el movimiento del pedal a la rueda." },
+    { t: "mc", tema: "sistemas", q: "Un sistema informático está formado por…", o: ["Hardware y software que procesan datos", "Caños y válvulas", "Engranajes y ejes", "Pistones con aceite"], a: 0, e: "Hardware (lo que se toca) + software (los programas) procesan datos y dan información." },
+    { t: "mc", tema: "proyecto", q: "¿Qué es un proyecto tecnológico?", o: ["Un proceso ordenado para resolver un problema o una necesidad", "Una maqueta terminada", "Un dibujo técnico", "Una investigación en internet"], a: 0, e: "El proyecto es todo el proceso: pensar, diseñar, organizar, construir y evaluar." },
+    { t: "order", tema: "proyecto", q: "Ordená las etapas del proyecto tecnológico.", i: ["Identificación del problema", "Búsqueda de información", "Diseño y análisis del producto", "Organización y gestión", "Planificación", "Construcción del producto o prototipo", "Evaluación y perfeccionamiento"], e: "Recordá: el Diseño (3) va antes que Organización y gestión (4) y Planificación (5)." },
+    { t: "mc", tema: "proyecto", q: "¿Cuál de estas NO es una etapa del proyecto tecnológico?", o: ["Publicidad y venta del producto", "Búsqueda de información", "Planificación", "Evaluación y perfeccionamiento"], a: 0, e: "Las siete etapas son: problema, información, diseño, organización y gestión, planificación, construcción y evaluación." }
+  ]
+},
+/* =================================================================
+   NIVEL 2 · COMPRENDER
+   ================================================================= */
+{
+  id: 2, nombre: "Comprender", rango: "Técnico/a", ico: "⚙️",
+  mision: "Segunda misión: entender cómo funciona cada cosa. Ya no alcanza con reconocer: tenés que poder explicar.",
+  lectura: [
+    { tema: "energia", titulo: "⚡ La energía no se pierde: se transforma", html: `
+<div class="box key"><b class="lab">Principio de conservación</b>La energía <b>no se crea ni se destruye, solo se transforma</b>.</div>
+<p>Cuando decimos que el celular “se quedó sin batería”, la energía no desapareció: la energía química de la batería se transformó en luz, sonido y calor que ya no podemos aprovechar.</p>
+<div class="tblwrap"><table class="tbl"><tr><th>Aparato</th><th>Energía inicial</th><th>Energía final</th></tr>
+<tr><td>Motor eléctrico</td><td>Eléctrica</td><td>Mecánica</td></tr><tr><td>Motor de combustión</td><td>Química</td><td>Mecánica</td></tr>
+<tr><td>Estufa eléctrica</td><td>Eléctrica</td><td>Térmica</td></tr><tr><td>Cocina de gas</td><td>Química</td><td>Térmica</td></tr>
+<tr><td>Lámpara</td><td>Eléctrica</td><td>Luminosa</td></tr><tr><td>Parlante</td><td>Eléctrica</td><td>Sonora</td></tr>
+<tr><td>Panel solar</td><td>Luminosa</td><td>Eléctrica</td></tr><tr><td>Pila</td><td>Química</td><td>Eléctrica</td></tr>
+<tr><td>Central térmica</td><td>Química</td><td>Eléctrica</td></tr><tr><td>Freno (zapata)</td><td>Mecánica</td><td>Térmica</td></tr></table></div>` },
+    { tema: "centrales", titulo: "🏭 Cómo funciona cada central", html: `
+<p>Casi todas siguen la misma idea: <b>algo hace girar una turbina → la turbina mueve el generador → el generador produce electricidad → el transformador la envía por las líneas de alta tensión</b>. Lo que cambia es <b>qué</b> hace girar la turbina:</p>
+<ul><li>💧 <b>Hidroeléctrica</b>: el agua del <b>embalse</b> baja por la <b>tubería de presión</b> y hace girar la <b>turbina hidráulica</b>.</li>
+<li>🔥 <b>Termoeléctrica</b>: se quema gas en la <b>caldera</b>, el calor convierte agua en <b>vapor</b> que mueve la <b>turbina de vapor</b>. El <b>condensador</b> enfría el vapor y lo vuelve agua para reutilizarla.</li>
+<li>⚛️ <b>Nuclear</b>: en el <b>reactor</b> se dividen átomos de uranio (fisión). Ese calor produce vapor en el <b>generador de vapor</b>. Las <b>barras de control</b> regulan la velocidad de la reacción.</li>
+<li>🌬️ <b>Eólica</b>: el viento empuja las <b>aspas</b>; la <b>caja multiplicadora</b> aumenta la velocidad de giro para el <b>generador</b>, que está en la <b>góndola</b>.</li>
+<li>🌿 <b>Biomasa</b>: se quema materia orgánica en una <b>caldera</b> y el vapor mueve la turbina.</li>
+<li>☀️ <b>Solar fotovoltaica</b>: ¡la excepción! <b>No tiene turbina</b>. Las <b>celdas fotovoltaicas</b> transforman la luz directamente en corriente continua, y el <b>inversor</b> la convierte en corriente alterna.</li></ul>` },
+    { tema: "sistemas", titulo: "⚙️ Cada sistema técnico, en detalle", html: `
+<ul><li><b>Hidráulico</b>: una <b>bomba</b> genera presión en un líquido (generalmente aceite), las <b>válvulas</b> controlan el flujo y los <b>actuadores</b> (pistones) convierten esa energía en movimiento. Ejemplo: gato hidráulico, frenos del auto.</li>
+<li><b>Hídrico</b>: tiene una parte que <b>almacena</b> y otra que <b>distribuye o canaliza</b> el líquido, con válvulas para regularlo. Ejemplo: la red de agua potable de Ushuaia.</li>
+<li><b>De control</b>: mide y corrige para mantener un valor estable. Ejemplo: el termostato de la calefacción.</li>
+<li><b>Informático</b>: recibe datos, los procesa y entrega información.</li></ul>
+<div class="box key"><b class="lab">No confundir</b><b>Hidráulico</b> usa el líquido para <b>transmitir fuerza o movimiento</b>. <b>Hídrico</b> tiene como objetivo <b>almacenar y transportar</b> el líquido.</div>` },
+    { tema: "proyecto", titulo: "🧭 Qué se hace en cada etapa", html: `
+<ol><li><b>Identificación del problema</b>: ¿qué pasa?, ¿a quién afecta?, ¿por qué conviene resolverlo?</li>
+<li><b>Búsqueda de información</b>: libros, internet, videos, manuales, objetos parecidos.</li>
+<li><b>Diseño y análisis del producto</b>: se imaginan soluciones, se elige la mejor y se representa con bocetos, croquis y dibujo técnico.</li>
+<li><b>Organización y gestión</b>: se reparten tareas, se reúnen materiales y se calculan costos.</li>
+<li><b>Planificación</b>: se ordenan las acciones en el tiempo (cronograma).</li>
+<li><b>Construcción</b>: se lleva a la práctica lo pensado y se registra lo que ocurre.</li>
+<li><b>Evaluación y perfeccionamiento</b>: se comprueba si funciona y se mejora. ¡Está presente durante <b>todo</b> el proyecto!</li></ol>` }
+  ],
+  interactivo: { tipo: "chain", titulo: "Armá la central",
+    intro: "Elegí una central y tocá los medios técnicos en el orden en que pasa la energía. Cuidado: hay piezas que no pertenecen a esa central.",
+    centrales: [
+      { n: "💧 Hidroeléctrica", tr: "Mecánica (potencial del agua) → Eléctrica", c: [["Presa y embalse", "Retiene el agua en altura: guarda energía potencial."], ["Tubería de presión", "Conduce el agua a gran velocidad hacia la turbina."], ["Turbina hidráulica", "El agua la hace girar como un molino gigante."], ["Generador eléctrico", "Convierte el giro en electricidad."], ["Transformador y líneas", "Elevan la tensión y llevan la electricidad a las ciudades."]], x: ["Caldera", "Aspas"] },
+      { n: "🔥 Termoeléctrica", tr: "Química (gas natural) → Térmica → Mecánica → Eléctrica", c: [["Gas natural", "El combustible fósil que guarda energía química."], ["Caldera", "Quema el gas y convierte agua en vapor a alta presión."], ["Turbina de vapor", "El vapor la hace girar."], ["Generador eléctrico", "Convierte el giro en electricidad."], ["Transformador y líneas", "Llevan la electricidad a la red."]], x: ["Reactor", "Inversor"] },
+      { n: "⚛️ Nuclear", tr: "Nuclear → Térmica → Mecánica → Eléctrica", c: [["Barras de uranio", "Contienen el combustible nuclear."], ["Reactor", "Allí ocurre la fisión, que libera muchísimo calor."], ["Generador de vapor", "El calor del circuito primario produce vapor en otro circuito."], ["Turbina de vapor", "El vapor la hace girar."], ["Generador eléctrico", "Convierte el giro en electricidad."]], x: ["Caldera de gas", "Aspas"] },
+      { n: "🌬️ Eólica", tr: "Mecánica (cinética del viento) → Eléctrica", c: [["Viento", "Aire en movimiento: energía cinética."], ["Aspas y rotor", "El viento las empuja y giran."], ["Caja multiplicadora", "Aumenta la velocidad de giro."], ["Generador eléctrico", "Dentro de la góndola, produce electricidad."], ["Transformador y líneas", "Elevan la tensión para transportarla."]], x: ["Turbina de vapor", "Celdas fotovoltaicas"] },
+      { n: "☀️ Solar fotovoltaica", tr: "Luminosa → Eléctrica (sin turbina)", c: [["Luz solar", "Los fotones llegan a los paneles."], ["Celdas fotovoltaicas", "El silicio libera electrones: corriente continua."], ["Inversor", "Convierte la corriente continua en alterna."], ["Medidor", "Registra la energía producida."], ["Red eléctrica", "La electricidad se consume o se envía a la red."]], x: ["Turbina", "Generador giratorio"] },
+      { n: "🌿 Biomasa", tr: "Química (materia orgánica) → Térmica → Mecánica → Eléctrica", c: [["Almacén de biomasa", "Guarda restos de madera, agrícolas u orgánicos."], ["Caldera", "Quema la biomasa y produce vapor."], ["Turbina de vapor", "El vapor la hace girar."], ["Generador eléctrico", "Convierte el giro en electricidad."], ["Transformador y líneas", "Llevan la electricidad a la red."]], x: ["Reactor", "Presa"] }
+    ] },
+  consejos: {
+    energia: "Repasá el principio de conservación y la tabla de transformaciones: energía inicial y final de cada aparato.",
+    centrales: "Repasá el funcionamiento paso a paso de cada central y para qué sirve cada medio técnico (condensador, barras de control, caja multiplicadora, inversor).",
+    sistemas: "Repasá en qué se diferencian los sistemas hidráulico e hídrico, y qué hace un sistema de control.",
+    proyecto: "Repasá qué se hace en cada etapa, sobre todo la diferencia entre Organización y gestión y Planificación."
+  },
+  banco: [
+    { t: "mc", tema: "energia", q: "Tu celular “se quedó sin batería”. Según la física, ¿qué pasó con la energía?", o: ["Se transformó en luz, sonido y calor que ya no podemos aprovechar", "Desapareció por completo", "Se destruyó dentro de la batería", "Volvió a la central eléctrica"], a: 0, e: "La energía no se crea ni se destruye, solo se transforma." },
+    { t: "mc", tema: "energia", q: "En la cocina de gas de tu casa, la energía se transforma de…", o: ["Química a térmica", "Eléctrica a térmica", "Térmica a química", "Luminosa a térmica"], a: 0, e: "El gas guarda energía química que se libera como calor al quemarse." },
+    { t: "sort", tema: "energia", q: "¿En qué energía FINAL termina cada aparato?", b: ["Mecánica", "Térmica", "Luminosa", "Eléctrica"], i: [["Motor eléctrico", 0], ["Motor de combustión", 0], ["Estufa eléctrica", 1], ["Freno (zapata)", 1], ["Lámpara", 2], ["Panel solar", 3], ["Pila", 3]], e: "Mirá la tabla de transformaciones: cada aparato recibe una forma de energía y entrega otra." },
+    { t: "tf", tema: "energia", q: "Verdadero o falso: con una máquina muy moderna se puede crear energía de la nada.", a: false, e: "Falso. La energía no se crea ni se destruye: solo se transforma." },
+    { t: "mc", tema: "centrales", q: "En casi todas las centrales, ¿qué máquina convierte el movimiento de rotación en electricidad?", o: ["El generador eléctrico", "El transformador", "El inversor", "La caldera"], a: 0, e: "La turbina gira y el generador transforma ese giro en electricidad." },
+    { t: "mc", tema: "centrales", q: "En una central nuclear, ¿para qué sirven las barras de control?", o: ["Para regular la velocidad de la reacción de fisión", "Para transportar el uranio", "Para hacer girar la turbina", "Para enfriar el vapor"], a: 0, e: "Las barras de control regulan la reacción en el reactor." },
+    { t: "mc", tema: "centrales", q: "¿Qué hace el condensador de una central termoeléctrica?", o: ["Enfría el vapor usado y lo vuelve agua para reutilizarla", "Quema el gas natural", "Produce la electricidad", "Eleva la tensión de la corriente"], a: 0, e: "Gracias al condensador, el agua circula en un ciclo cerrado." },
+    { t: "mc", tema: "centrales", q: "En un aerogenerador, la caja multiplicadora…", o: ["Aumenta la velocidad de giro para el generador", "Orienta la góndola según el viento", "Convierte corriente continua en alterna", "Guarda la energía para la noche"], a: 0, e: "Las aspas giran lento; la caja multiplicadora aumenta la velocidad para que el generador funcione." },
+    { t: "order", tema: "centrales", q: "Ordená el funcionamiento de una central termoeléctrica.", i: ["Se quema gas natural en la caldera", "El calor convierte agua en vapor a alta presión", "El vapor hace girar la turbina", "La turbina mueve el generador eléctrico", "La electricidad sale por las líneas de alta tensión"], e: "Química → térmica → mecánica → eléctrica." },
+    { t: "mc", tema: "centrales", q: "El inversor de una central solar fotovoltaica…", o: ["Convierte la corriente continua en corriente alterna", "Hace girar los paneles", "Calienta el agua", "Mueve la turbina"], a: 0, e: "Los paneles producen corriente continua; en las casas usamos corriente alterna." },
+    { t: "mc", tema: "sistemas", q: "¿Cuál es el objetivo principal de un sistema hídrico?", o: ["Almacenar y transportar líquidos", "Transmitir fuerza con aceite a presión", "Procesar datos", "Transmitir movimiento con engranajes"], a: 0, e: "Ejemplo: tanque de agua + cañerías de una casa." },
+    { t: "mc", tema: "sistemas", q: "¿Qué diferencia a un sistema hidráulico de uno hídrico?", o: ["El hidráulico usa un líquido para transmitir fuerza o movimiento; el hídrico almacena y transporta el líquido", "Son lo mismo con distinto nombre", "El hídrico usa aceite y el hidráulico usa agua", "El hidráulico solo existe en los autos"], a: 0, e: "Hidráulico = fuerza/movimiento con líquido. Hídrico = guardar y llevar líquido." },
+    { t: "mc", tema: "sistemas", q: "Un sistema de control busca…", o: ["Controlar o mantener estables valores de materia, energía o información", "Almacenar agua", "Transmitir movimiento", "Generar electricidad"], a: 0, e: "Ejemplo: el termostato mide la temperatura y prende o apaga la calefacción." },
+    { t: "mc", tema: "sistemas", q: "En un circuito hidráulico, ¿qué hacen los actuadores (pistones)?", o: ["Convierten la energía del líquido en movimiento", "Guardan el líquido", "Procesan datos", "Generan corriente"], a: 0, e: "Depósito, bomba, válvulas y actuadores: estos últimos producen el movimiento útil." },
+    { t: "mc", tema: "proyecto", q: "¿Qué se hace en la etapa de Diseño y análisis del producto?", o: ["Se imaginan soluciones, se elige la mejor y se representa con bocetos y dibujo técnico", "Se arma el producto", "Se reparten las tareas", "Se arma el cronograma"], a: 0, e: "Diseñar es pensar antes de hacer y representar la solución." },
+    { t: "mc", tema: "proyecto", q: "¿Cuál es la diferencia entre Organización y gestión y Planificación?", o: ["Organización reparte tareas, materiales y costos; Planificación ordena las acciones en el tiempo", "Son la misma etapa", "Planificación es dibujar y Organización es construir", "Organización va después de la Construcción"], a: 0, e: "Organizar = quién, qué y cuánto cuesta. Planificar = cuándo y en qué orden." },
+    { t: "mc", tema: "proyecto", q: "¿Qué preguntas guían la Identificación del problema?", o: ["¿Qué pasa?, ¿a quién afecta?, ¿por qué conviene resolverlo?", "¿Cuánto cuesta?, ¿quién compra?", "¿Qué color le ponemos?", "¿Cuándo lo entregamos?"], a: 0, e: "Primero hay que entender bien el problema." },
+    { t: "tf", tema: "proyecto", q: "Verdadero o falso: la evaluación se hace solamente al final del proyecto.", a: false, e: "Falso. Aunque es la etapa 7, se evalúa durante todo el proyecto." }
+  ]
+},
+/* =================================================================
+   NIVEL 3 · RELACIONAR
+   ================================================================= */
+{
+  id: 3, nombre: "Relacionar", rango: "Analista", ico: "🔗",
+  mision: "Tercera misión: conectar todo. Vas a mirar una central por dentro y descubrir cómo se relacionan la energía, los medios técnicos y los sistemas.",
+  lectura: [
+    { tema: "energia", titulo: "⚡ Cadenas de transformación en una central", html: `
+<p>Toda central es un <b>proceso de transformación de la energía</b>: parte de una <b>energía primaria</b> (el recurso tal como está en la naturaleza) y llega a una <b>energía final</b> (la electricidad que usás en casa).</p>
+<p>Ejemplo con la electricidad de Ushuaia:</p>
+<div class="flow"><span>Química (gas natural)</span><i>›</i><span>Térmica (caldera)</span><i>›</i><span>Mecánica (turbina)</span><i>›</i><span>Eléctrica (generador)</span><i>›</i><span>Luminosa (tu lámpara)</span></div>
+<p>En una hidroeléctrica la cadena es más corta: <b>mecánica potencial</b> (agua en altura) → <b>mecánica cinética</b> (agua que cae y turbina que gira) → <b>eléctrica</b>.</p>` },
+    { tema: "centrales", titulo: "🏭 Comparar centrales", html: `
+<ul><li><b>Termoeléctrica, nuclear y biomasa se parecen</b>: las tres usan <b>calor para producir vapor</b> que mueve una turbina. Cambia de dónde sale el calor: combustión de gas, fisión del uranio o combustión de materia orgánica.</li>
+<li><b>Hidroeléctrica y eólica se parecen</b>: un fluido en movimiento (agua o aire) hace girar directamente la turbina o el rotor, sin calor.</li>
+<li><b>La solar es distinta</b>: no tiene piezas que giren.</li></ul>` },
+    { tema: "sistemas", titulo: "⚙️ La central como sistema complejo", html: `
+<p>Una central es un <b>sistema complejo</b>: está formada por muchos <b>subsistemas</b> que interactúan para cumplir un objetivo común, generar electricidad. Si falla uno (por ejemplo, el generador), cambia el funcionamiento de todo el sistema.</p>
+<p>Podemos representarla con un <b>diagrama de bloques</b>:</p>
+<div class="flow"><span><b>ENTRADA</b>: agua del embalse</span><i>›</i><span><b>PROCESO</b>: transformación en la turbina y el generador</span><i>›</i><span><b>SALIDA</b>: energía eléctrica + agua devuelta al río</span></div>
+<div class="box key"><b class="lab">Sistemas en una hidroeléctrica</b><b>Hídrico</b>: embalse, tuberías y canal de descarga. <b>Hidráulico</b>: pistones con aceite que abren las compuertas. <b>Mecánico</b>: turbina y eje. <b>Eléctrico</b>: generador y transformador. <b>De control</b>: sensores y regulador de velocidad. <b>Informático</b>: computadoras de la sala de control.</div>` },
+    { tema: "proyecto", titulo: "🧭 Las etapas se relacionan", html: `
+<p>Las etapas tienen un orden, pero <b>se conectan entre sí</b>: a veces hay que volver atrás. Si en la construcción la turbina de la maqueta no gira, se <b>evalúa</b> y se vuelve al <b>diseño</b> para corregirla.</p>
+<p>En el proyecto <b>Energía en Acción</b> cada etapa dejó un registro en la <b>Carpeta Técnica</b>: el problema, la información sobre la central asignada, los planos a escala, el reparto de tareas, el cronograma, el registro de construcción y la evaluación.</p>` }
+  ],
+  interactivo: { tipo: "xray", titulo: "Rayos X de una central hidroeléctrica",
+    intro: "Tocá cada número del esquema. Descubrí qué medio técnico es y adiviná a qué sistema técnico pertenece. Practicás sin perder puntos.",
+    sistemas: ["Hídrico", "Hidráulico", "Mecánico", "Eléctrico", "De control", "Informático"],
+    puntos: [
+      { n: 1, x: 105, y: 215, nom: "Embalse y presa", fn: "Retienen y almacenan el agua en altura.", s: 0 },
+      { n: 2, x: 262, y: 62, nom: "Compuertas con pistones de aceite", fn: "Un pistón empuja aceite a presión y abre o cierra las compuertas.", s: 1 },
+      { n: 3, x: 372, y: 262, nom: "Tubería de presión", fn: "Conduce el agua desde el embalse hasta la turbina.", s: 0 },
+      { n: 4, x: 470, y: 352, nom: "Turbina hidráulica", fn: "El agua la hace girar: transmite el movimiento al eje.", s: 2 },
+      { n: 5, x: 528, y: 295, nom: "Eje de transmisión", fn: "Transmite el giro de la turbina al generador.", s: 2 },
+      { n: 6, x: 500, y: 236, nom: "Generador eléctrico", fn: "Convierte el giro en energía eléctrica.", s: 3 },
+      { n: 7, x: 690, y: 300, nom: "Transformador y líneas de alta tensión", fn: "Elevan la tensión y transportan la electricidad.", s: 3 },
+      { n: 8, x: 600, y: 330, nom: "Regulador de velocidad y sensores", fn: "Miden la velocidad de la turbina y la mantienen estable.", s: 4 },
+      { n: 9, x: 600, y: 180, nom: "Sala de control con computadoras", fn: "Reciben datos de toda la central y los muestran como información.", s: 5 },
+      { n: 10, x: 735, y: 392, nom: "Canal de descarga", fn: "Devuelve el agua al río después de pasar por la turbina.", s: 0 }
+    ] },
+  consejos: {
+    energia: "Repasá las cadenas de transformación de cada central: desde la energía primaria hasta la energía eléctrica.",
+    centrales: "Repasá en qué se parecen y en qué se diferencian las centrales (las que usan vapor, las que usan un fluido en movimiento y la solar).",
+    sistemas: "Repasá el Rayos X de la hidroeléctrica: qué sistema técnico corresponde a cada medio técnico y cómo se arma el diagrama de bloques (entrada, proceso, salida).",
+    proyecto: "Repasá cómo se relacionan las etapas y practicá reconocer en qué etapa está un grupo a partir de una situación."
+  },
+  banco: [
+    { t: "order", tema: "energia", q: "Ordená la cadena de transformaciones desde el gas natural hasta la lámpara de tu cuarto.", i: ["Energía química del gas natural", "Energía térmica en la caldera", "Energía mecánica de la turbina", "Energía eléctrica del generador", "Energía luminosa de la lámpara"], e: "Cada medio técnico transforma la energía en otra forma." },
+    { t: "mc", tema: "energia", q: "¿Qué transformación ocurre en una central hidroeléctrica?", o: ["Mecánica (potencial del agua) → eléctrica", "Química → eléctrica", "Nuclear → térmica → eléctrica", "Luminosa → eléctrica"], a: 0, e: "El agua en altura tiene energía potencial; al caer mueve la turbina." },
+    { t: "mc", tema: "energia", q: "El agua del río tal como está en la naturaleza es energía ___; la electricidad que llega a tu casa es energía ___.", o: ["primaria / final", "final / primaria", "renovable / no renovable", "química / térmica"], a: 0, e: "Energía primaria = recurso natural. Energía final = la que usamos después de la transformación." },
+    { t: "mc", tema: "centrales", q: "¿En qué se parecen una central nuclear y una termoeléctrica?", o: ["Las dos usan calor para producir vapor que mueve una turbina", "Las dos queman gas natural", "Las dos usan paneles", "Ninguna tiene generador"], a: 0, e: "Cambia la fuente de calor: fisión del uranio o combustión del gas." },
+    { t: "mc", tema: "centrales", q: "¿Qué central NO tiene turbina ni generador giratorio?", o: ["Solar fotovoltaica", "Eólica", "Hidroeléctrica", "Biomasa"], a: 0, e: "La luz se transforma directamente en electricidad en las celdas fotovoltaicas." },
+    { t: "sort", tema: "centrales", q: "Agrupá las centrales según cómo hacen girar la turbina.", b: ["Con vapor (calor)", "Con un fluido en movimiento", "No tiene turbina"], i: [["Termoeléctrica", 0], ["Nuclear", 0], ["Biomasa", 0], ["Hidroeléctrica", 1], ["Eólica", 1], ["Solar fotovoltaica", 2]], e: "Agruparlas así te ayuda a recordar cómo funciona cada una." },
+    { t: "order", tema: "centrales", q: "Ordená el funcionamiento de una central eólica.", i: ["El viento empuja las aspas", "Gira el rotor", "La caja multiplicadora aumenta la velocidad", "El generador de la góndola produce electricidad", "El transformador eleva la tensión"], e: "Mecánica (viento) → mecánica (giro) → eléctrica." },
+    { t: "sort", tema: "sistemas", q: "¿A qué sistema técnico de la hidroeléctrica pertenece cada elemento?", b: ["Hídrico", "Mecánico", "De control", "Informático"], i: [["Embalse", 0], ["Canal de descarga", 0], ["Eje de transmisión", 1], ["Engranajes", 1], ["Regulador de velocidad", 2], ["Sensores de nivel de agua", 2], ["Computadoras de la sala de control", 3], ["Software que registra la producción", 3]], e: "Cada subsistema cumple una función dentro del sistema complejo." },
+    { t: "mc", tema: "sistemas", q: "Las compuertas de la presa se abren con pistones que empujan aceite a presión. Eso es un sistema…", o: ["Hidráulico", "Hídrico", "Informático", "Eléctrico"], a: 0, e: "El líquido (aceite) transmite fuerza y movimiento: sistema hidráulico." },
+    { t: "mc", tema: "sistemas", q: "La sala de control detecta que la turbina gira demasiado rápido y cierra un poco las compuertas. ¿Qué sistema está actuando?", o: ["De control", "Hídrico", "Mecánico", "Hidráulico"], a: 0, e: "Mide un valor y lo corrige para mantenerlo estable: sistema de control." },
+    { t: "sort", tema: "sistemas", q: "Armá el diagrama de bloques de una central hidroeléctrica.", b: ["Entrada", "Proceso", "Salida"], i: [["Agua del embalse", 0], ["Giro de la turbina y del generador", 1], ["Transformación de energía mecánica en eléctrica", 1], ["Energía eléctrica hacia la red", 2], ["Agua devuelta al río", 2]], e: "Entrada → proceso → salida." },
+    { t: "tf", tema: "sistemas", q: "Verdadero o falso: si se rompe el generador, la central igual produce electricidad porque las otras partes siguen funcionando.", a: false, e: "Falso. En un sistema, si falla un elemento cambia el funcionamiento de todo el conjunto." },
+    { t: "mc", tema: "proyecto", q: "El grupo dibuja las vistas de la maqueta a escala 1:4 sobre una base de 60 × 40 cm. ¿En qué etapa está?", o: ["Diseño y análisis del producto", "Construcción del producto o prototipo", "Planificación", "Búsqueda de información"], a: 0, e: "Representar la solución con dibujo técnico es parte del Diseño." },
+    { t: "mc", tema: "proyecto", q: "Reparten tareas: quién consigue cartón, quién pinta, quién arma la turbina, y calculan cuánto van a gastar. ¿En qué etapa están?", o: ["Organización y gestión", "Planificación", "Diseño y análisis del producto", "Identificación del problema"], a: 0, e: "Repartir tareas, reunir materiales y calcular costos es Organización y gestión." },
+    { t: "mc", tema: "proyecto", q: "Durante la construcción descubren que la turbina de la maqueta no gira. ¿Qué es lo correcto?", o: ["Evaluar qué falla y volver al diseño para mejorarla", "Seguir igual y entregarla", "Empezar un proyecto nuevo", "Saltear la etapa de evaluación"], a: 0, e: "Las etapas se relacionan: evaluar y perfeccionar puede llevarte a volver atrás." },
+    { t: "mc", tema: "proyecto", q: "¿Qué etapa va inmediatamente después del Diseño y análisis del producto?", o: ["Organización y gestión", "Construcción del producto o prototipo", "Planificación", "Evaluación y perfeccionamiento"], a: 0, e: "Orden: 3 Diseño → 4 Organización y gestión → 5 Planificación." }
+  ]
+},
+/* =================================================================
+   NIVEL 4 · APLICAR
+   ================================================================= */
+{
+  id: 4, nombre: "Aplicar", rango: "Ingeniero/a austral", ico: "🚀",
+  mision: "Misión final: usar todo lo aprendido para pensar la energía de Ushuaia como lo haría un equipo técnico.",
+  lectura: [
+    { tema: "energia", titulo: "⚡ La energía de Ushuaia", html: `
+<p>En Tierra del Fuego la electricidad la genera y distribuye la <b>SPSE</b> (Servicios Públicos Sociedad del Estado), en gran parte con <b>centrales termoeléctricas a gas natural</b>, un recurso de la provincia.</p>
+<p>Las fuentes también se clasifican con otros criterios:</p>
+<ul><li>Por su uso: <b>convencionales</b> (las más usadas, como los combustibles fósiles) y <b>no convencionales o alternativas</b> (las que están empezando a desarrollarse).</li>
+<li>Por su impacto ambiental: <b>limpias</b> (impacto mínimo, sin residuos tóxicos) y <b>contaminantes</b>.</li></ul>
+<div class="box local"><b class="lab">Recursos de nuestra ciudad</b><b>Viento</b> fuerte y frecuente en la costa del Canal Beagle · <b>ríos de montaña</b> con caudal permanente (Río Olivia, Río Pipo) · <b>gas natural</b> · <b>poco sol</b> en invierno, con días muy cortos.</div>` },
+    { tema: "centrales", titulo: "🏭 ¿Qué central conviene en Ushuaia?", html: `
+<ul><li>🔥 <b>Termoeléctrica a gas</b>: funciona las 24 horas sin depender del clima, pero emite CO₂ y usa un recurso no renovable.</li>
+<li>🌬️ <b>Eólica</b>: muy prometedora por el viento austral; su límite es que no genera cuando no hay viento.</li>
+<li>💧 <b>Hidroeléctrica a pequeña escala</b>: posible en ríos de montaña.</li>
+<li>☀️ <b>Solar</b>: limitada por las pocas horas de sol en invierno.</li>
+<li>⚛️ <b>Nuclear</b>: genera mucho sin CO₂, pero produce residuos radiactivos y es extremadamente costosa.</li></ul>
+<div class="box key"><b class="lab">Idea clave</b>No hay una central perfecta: se combinan según los recursos del lugar, el costo y el impacto ambiental.</div>` },
+    { tema: "sistemas", titulo: "⚙️ Analizar un aerogenerador", html: `
+<p>Para aplicar lo que sabés, analicemos un aerogenerador como sistema:</p>
+<ul><li><b>Mecánico</b>: aspas, rotor, eje y engranajes de la caja multiplicadora.</li>
+<li><b>Eléctrico</b>: generador, cables y transformador.</li>
+<li><b>De control</b>: el <b>sistema de orientación</b> gira la góndola para enfrentar el viento y frena las aspas si el viento es peligroso.</li>
+<li><b>Informático</b>: computadoras que reciben datos del anemómetro y registran la producción.</li></ul>
+<div class="flow"><span><b>ENTRADA</b>: viento</span><i>›</i><span><b>PROCESO</b>: giro de aspas, multiplicación y generación</span><i>›</i><span><b>SALIDA</b>: energía eléctrica</span></div>` },
+    { tema: "proyecto", titulo: "🧭 Un proyecto real para la ciudad", html: `
+<p>Imaginá que el municipio le pide a tu curso: <i>“¿Cómo podría Ushuaia generar más energía limpia?”</i>. Con el proyecto tecnológico:</p>
+<ol><li><b>Problema</b>: la ciudad depende mucho del gas, que es no renovable.</li>
+<li><b>Información</b>: datos de viento, ríos y consumo de la ciudad.</li>
+<li><b>Diseño</b>: un parque eólico a escala, con planos.</li>
+<li><b>Organización y gestión</b>: tareas, materiales y costos.</li>
+<li><b>Planificación</b>: cronograma de trabajo.</li>
+<li><b>Construcción</b>: el prototipo o la maqueta.</li>
+<li><b>Evaluación</b>: ¿genera lo esperado? ¿qué mejorar?</li></ol>
+<div class="box key"><b class="lab">Ojo</b>Si un grupo construye sin planos, o no reparte tareas ni arma un cronograma, el proyecto falla: cada etapa tiene una razón de ser.</div>` }
+  ],
+  interactivo: { tipo: "cards", titulo: "Bitácora: parque eólico para Ushuaia",
+    intro: "Tu equipo quiere proponer un parque eólico escolar en el CIEU. Abrí cada carta de la bitácora y decidí en qué etapa del proyecto están. Practicás sin perder puntos.",
+    cartas: [
+      { s: 0, tx: "Notamos que casi toda la electricidad de la ciudad sale de quemar gas. ¿A quién afecta? ¿Por qué conviene cambiarlo?", ex: "Detectar la necesidad y preguntarse a quién afecta es identificar el problema." },
+      { s: 1, tx: "Consultamos datos de viento del Canal Beagle y buscamos cómo funcionan los aerogeneradores pequeños.", ex: "Reunir datos y antecedentes es la búsqueda de información. Acá aparece el recurso eólico de Ushuaia." },
+      { s: 2, tx: "Dibujamos tres opciones de aerogenerador, elegimos la mejor y hacemos los planos a escala.", ex: "Imaginar soluciones, elegir y representar con dibujo técnico es el diseño." },
+      { s: 3, tx: "Repartimos tareas, conseguimos un motor pequeño de juguete como generador y calculamos el costo de los materiales.", ex: "Tareas, materiales y costos: organización y gestión." },
+      { s: 4, tx: "Armamos un cronograma: semana 1 la torre, semana 2 las aspas, semana 3 la conexión eléctrica.", ex: "Ordenar las acciones en el tiempo es planificar." },
+      { s: 5, tx: "Cortamos las aspas, montamos el rotor sobre el eje y conectamos el generador. Anotamos cada problema en la Carpeta Técnica.", ex: "Llevar a la práctica lo pensado y registrarlo es la construcción." },
+      { s: 6, tx: "Probamos con un ventilador: el LED enciende, pero muy poco. Decidimos agrandar las aspas.", ex: "Comprobar si funciona y mejorarlo es evaluación y perfeccionamiento." }
+    ] },
+  consejos: {
+    energia: "Repasá los recursos energéticos de Ushuaia y los criterios de clasificación de las fuentes (renovable/no renovable, convencional/alternativa, limpia/contaminante).",
+    centrales: "Repasá las ventajas y desventajas de cada central y por qué algunas convienen más que otras en Ushuaia.",
+    sistemas: "Repasá el análisis del aerogenerador: qué parte corresponde a cada sistema técnico y su diagrama de bloques.",
+    proyecto: "Repasá la bitácora del parque eólico: practicá aplicar las etapas a un problema real de la ciudad."
+  },
+  banco: [
+    { t: "mc", tema: "energia", q: "El gas natural con el que se genera gran parte de la electricidad de Ushuaia es una fuente…", o: ["No renovable, convencional y contaminante", "Renovable, alternativa y limpia", "Renovable y convencional", "No renovable y limpia"], a: 0, e: "Se agota, es de las más usadas y su combustión emite CO₂." },
+    { t: "sort", tema: "energia", q: "Clasificá estas fuentes de Ushuaia según su impacto ambiental.", b: ["Limpia", "Contaminante"], i: [["Viento del Canal Beagle", 0], ["Agua del Río Pipo", 0], ["Gas natural", 1], ["Gasoil de los generadores de emergencia", 1]], e: "Las limpias producen impacto mínimo y no generan residuos tóxicos." },
+    { t: "mc", tema: "energia", q: "Si se aprovecha el agua del Río Pipo con una pequeña central, ¿qué tipo de fuente y de energía se usa?", o: ["Renovable; energía mecánica del agua en movimiento", "No renovable; energía química", "Renovable; energía luminosa", "No renovable; energía nuclear"], a: 0, e: "El agua del río se repone y su movimiento es energía mecánica." },
+    { t: "mc", tema: "centrales", q: "¿Por qué la energía eólica es prometedora en Ushuaia y la solar tiene limitaciones?", o: ["Hay viento fuerte y frecuente todo el año, pero pocas horas de sol en invierno", "Porque los paneles no funcionan con frío", "Porque el viento no se agota y el sol sí", "Porque la eólica no necesita generador"], a: 0, e: "Hay que mirar los recursos del lugar para elegir la central." },
+    { t: "mc", tema: "centrales", q: "Un día de invierno casi sin viento, ¿qué central asegura el suministro en Ushuaia?", o: ["La termoeléctrica a gas, que funciona las 24 horas sin depender del clima", "La solar", "La eólica", "Ninguna"], a: 0, e: "Por eso las renovables se combinan con centrales que funcionan de forma continua." },
+    { t: "mc", tema: "centrales", q: "Alguien propone instalar una central nuclear en Ushuaia. ¿Cuál es una desventaja importante?", o: ["Produce residuos radiactivos de muy difícil gestión y es muy costosa", "Emite mucho CO₂", "Solo funciona de día", "Necesita mucho viento"], a: 0, e: "No emite CO₂ al operar, pero sus residuos y su costo son grandes desventajas." },
+    { t: "mc", tema: "centrales", q: "¿Qué combinación de centrales sería más razonable para que Ushuaia use más energía limpia?", o: ["Sumar eólica e hidroeléctrica pequeña a la termoeléctrica existente", "Reemplazar todo por paneles solares", "Construir una gran represa en el Canal Beagle", "Apagar la termoeléctrica sin reemplazo"], a: 0, e: "Se aprovechan los recursos locales sin perder un suministro continuo." },
+    { t: "mc", tema: "sistemas", q: "El sistema que gira la góndola del aerogenerador para enfrentar el viento es un sistema…", o: ["De control", "Hídrico", "Informático", "Hidráulico"], a: 0, e: "Mide la dirección del viento y corrige la posición: control." },
+    { t: "mc", tema: "sistemas", q: "Una computadora recibe datos del anemómetro y registra la producción de cada aerogenerador. Es un sistema…", o: ["Informático", "Mecánico", "Hídrico", "Eléctrico"], a: 0, e: "Hardware y software que procesan datos: sistema informático." },
+    { t: "sort", tema: "sistemas", q: "Ubicá cada parte del aerogenerador en su sistema técnico.", b: ["Mecánico", "Eléctrico", "De control", "Informático"], i: [["Aspas y rotor", 0], ["Caja multiplicadora", 0], ["Generador", 1], ["Transformador", 1], ["Sistema de orientación", 2], ["Freno automático por viento fuerte", 2], ["Software de monitoreo", 3]], e: "Un aerogenerador también es un sistema complejo con subsistemas." },
+    { t: "mc", tema: "sistemas", q: "En el diagrama de bloques de un aerogenerador, ¿cuál es la entrada y cuál la salida?", o: ["Entrada: viento. Salida: energía eléctrica", "Entrada: electricidad. Salida: viento", "Entrada: aspas. Salida: generador", "Entrada: torre. Salida: góndola"], a: 0, e: "Entrada → proceso (giro y generación) → salida." },
+    { t: "mc", tema: "proyecto", q: "Un grupo construyó la maqueta sin planos y las piezas no encajaban. ¿Qué etapa salteó?", o: ["Diseño y análisis del producto", "Búsqueda de información", "Evaluación y perfeccionamiento", "Identificación del problema"], a: 0, e: "Sin diseño no hay planos ni medidas: se construye a ciegas." },
+    { t: "mc", tema: "proyecto", q: "Otro grupo no terminó a tiempo porque nadie sabía qué hacer cada semana. ¿Qué etapas les faltaron?", o: ["Organización y gestión, y Planificación", "Identificación del problema", "Construcción", "Búsqueda de información"], a: 0, e: "Repartir tareas (organización) y ordenarlas en el tiempo (planificación)." },
+    { t: "mc", tema: "proyecto", q: "Prueban su aerogenerador con un ventilador y el LED enciende muy poco. ¿Qué etapa están viviendo?", o: ["Evaluación y perfeccionamiento", "Planificación", "Construcción", "Diseño"], a: 0, e: "Comprobar si funciona y decidir mejoras." },
+    { t: "order", tema: "proyecto", q: "Ordená la bitácora del parque eólico escolar.", i: ["Notamos que la ciudad depende del gas", "Buscamos datos del viento del Canal Beagle", "Dibujamos los planos del aerogenerador", "Repartimos tareas y calculamos costos", "Armamos el cronograma semanal", "Construimos el prototipo", "Lo probamos y lo mejoramos"], e: "Aplicaste las siete etapas a un problema real de Ushuaia." }
+  ]
+}
+];
+</script>
+<script>
+/* ===========================================================
+   MISIÓN ENERGÍA AUSTRAL · MOTOR DEL JUEGO
+   No hace falta editar esto para cambiar contenidos.
+   =========================================================== */
+(function () {
+  "use strict";
+  const C = window.CONFIG, NV = window.NIVELES, TM = window.TEMAS, ET = window.ETAPAS;
+  const TEMA_IDS = Object.keys(TM);
+  const MAX_NIVEL = C.preguntasPorNivel * C.puntosPrimerIntento;
+  const MAX_TOTAL = MAX_NIVEL * NV.length;
+  const FASES = [["lectura", "📖 Lectura"], ["explora", "🧪 Explorá"], ["desafio", "🎮 Desafío"], ["informe", "📋 Informe"]];
+  const $ = (s) => document.querySelector(s);
+
+  /* ---------------- Estado ---------------- */
+  function fresh() {
+    return { v: 1, id: "", nombre: "", inicio: null, screen: "intro", lv: 0, fase: "lectura", leidas: {}, ex: {},
+      mejor: NV.map(() => 0), intentos: NV.map(() => 0), ultimo: NV.map(() => null), temasMejor: {}, temasUltimo: {},
+      aprobado: NV.map(() => false), completo: NV.map(() => false), partida: null, racha: 0, rachaMax: 0,
+      fin: null, codigo: null, mute: false, sync: "off", pendiente: false, finalEnviado: false };
+  }
+  let S = (function load() {
+    try { const raw = localStorage.getItem(C.storageKey); if (raw) { const o = JSON.parse(raw); if (o && o.v === 1) return Object.assign(fresh(), o); } } catch (e) { /* sin almacenamiento */ }
+    return fresh();
+  })();
+  function save() { try { localStorage.setItem(C.storageKey, JSON.stringify(S)); } catch (e) { /* sin almacenamiento */ } }
+
+  /* ---------------- Utilidades ---------------- */
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const range = (n) => Array.from({ length: n }, (_, i) => i);
+  const firstName = () => (S.nombre || "").split(" ")[0];
+  const total = () => S.mejor.reduce((a, b) => a + b, 0);
+  function hudTotal() { const p = S.partida; return total() + (p ? Math.max(0, p.pts - S.mejor[p.lv]) : 0); }
+  function stars(pts) { const n = pts >= 90 ? 3 : pts >= 75 ? 2 : pts >= C.minimoParaAvanzar ? 1 : 0; return '<span class="stars" aria-label="' + n + ' estrellas">' + "★".repeat(n) + '<span class="off">' + "★".repeat(3 - n) + "</span></span>"; }
+  function hash(str) { let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36).toUpperCase().padStart(7, "0").slice(-6); }
+  function uid() { return "E" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 6).toUpperCase(); }
+  function say(m) { const l = $("#live"); if (l) { l.textContent = ""; setTimeout(() => { l.textContent = m; }, 30); } }
+  function status(r) { return r >= 0.8 ? ["Dominado", "✅", "st-ok"] : r >= 0.5 ? ["Repasar", "🔁", "st-mid"] : ["Reforzar", "⚠️", "st-low"]; }
+  function fecha(d) { return new Date(d || Date.now()).toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" }); }
+  function chime(ok) {
+    if (S.mute) return;
+    try {
+      const A = window.AudioContext || window.webkitAudioContext; if (!A) return;
+      const ctx = chime.ctx || (chime.ctx = new A());
+      (ok ? [660, 880, 1175] : [196, 165]).forEach((f, i) => {
+        const o = ctx.createOscillator(), g = ctx.createGain(); o.type = ok ? "sine" : "triangle"; o.frequency.value = f; o.connect(g); g.connect(ctx.destination);
+        const t = ctx.currentTime + i * 0.1; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.1, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3); o.start(t); o.stop(t + 0.35);
+      });
+    } catch (e) { /* sin audio */ }
+  }
+  function floater(txt, el) {
+    const r = el ? el.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0 };
+    const d = document.createElement("div"); d.className = "floater"; d.textContent = txt;
+    d.style.left = (r.left + r.width / 2 - 20) + "px"; d.style.top = (r.top - 10) + "px";
+    document.body.appendChild(d); setTimeout(() => d.remove(), 1000);
+  }
+
+  /* ---------------- Resultados por tema ---------------- */
+  function temaStats(lvIdx, src) { return (src || S.temasMejor)[lvIdx] || null; }
+  function temasGlobal() {
+    const g = {}; TEMA_IDS.forEach((t) => (g[t] = { p: 0, m: 0 }));
+    NV.forEach((_, i) => { const ts = S.temasMejor[i]; if (ts) TEMA_IDS.forEach((t) => { if (ts[t]) { g[t].p += ts[t].p; g[t].m += ts[t].m; } }); });
+    return g;
+  }
+  function listaRefuerzo() {
+    const out = [];
+    NV.forEach((n, i) => { const ts = S.temasMejor[i]; if (!ts) return;
+      TEMA_IDS.forEach((t) => { const x = ts[t]; if (!x || !x.m) return; const r = x.p / x.m; if (r < 0.8) out.push({ lv: i, tema: t, r, txt: "N" + n.id + " " + TM[t].corto + " (" + status(r)[0].toLowerCase() + ")" }); }); });
+    return out;
+  }
+
+  /* ---------------- Sincronización con Google Sheets ---------------- */
+  function nivelActualTxt() {
+    if (S.completo.every(Boolean)) return "Finalizado";
+    const n = NV[S.completo.findIndex((c) => !c)]; return "Nivel " + n.id + " · " + n.nombre;
+  }
+  function payload(accion) {
+    const g = temasGlobal(), pct = (t) => (g[t].m ? Math.round((100 * g[t].p) / g[t].m) : "");
+    return { accion, id: S.id, nombre: S.nombre, curso: C.curso, estado: S.completo.every(Boolean) ? "Finalizado" : "En curso",
+      nivelActual: nivelActualTxt(), fase: S.screen === "nivel" ? S.fase : S.screen,
+      n1: S.mejor[0], n2: S.mejor[1], n3: S.mejor[2], n4: S.mejor[3], total: total(), maximo: MAX_TOTAL,
+      porcentaje: Math.round((100 * total()) / MAX_TOTAL), intentos: S.intentos.join(" / "),
+      pEnergia: pct("energia"), pCentrales: pct("centrales"), pSistemas: pct("sistemas"), pProyecto: pct("proyecto"),
+      reforzar: listaRefuerzo().map((x) => x.txt).join("; "), codigo: S.codigo || "", inicio: S.inicio ? new Date(S.inicio).toISOString() : "",
+      tiempoMin: S.inicio ? Math.round(((S.fin || Date.now()) - S.inicio) / 60000) : 0, rachaMax: S.rachaMax,
+      escuela: C.escuela, docente: C.docente, fechaFin: S.fin ? fecha(S.fin) : "" };
+  }
+  function setSyncChip() { const c = $("#sync"); if (!c) return; const m = { ok: ["☁️ Guardado", "sync-ok"], wait: ["☁️ Reintentando…", "sync-wait"], off: ["☁️ Sin conexión a Sheets", "sync-off"] }[S.sync] || ["", ""]; c.textContent = m[0]; c.className = "chip " + m[1]; }
+  async function sync(accion) {
+    if (!C.sheetsUrl) { S.sync = "off"; save(); setSyncChip(); return; }
+    if (accion === "auto") accion = S.pendAccion || "progreso";
+    // si quedó pendiente un "final" (certificado), no se pierde aunque llegue otro aviso
+    if (S.pendAccion === "final") accion = "final";
+    const body = JSON.stringify(payload(accion));
+    try {
+      await fetch(C.sheetsUrl, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body });
+      S.sync = "ok"; S.pendiente = false; S.pendAccion = null;
+    } catch (e) { S.sync = "wait"; S.pendiente = true; S.pendAccion = accion; }
+    save(); setSyncChip();
+  }
+  window.addEventListener("online", () => { if (S.pendiente) sync("auto"); });
+  setInterval(() => { if (S.pendiente && navigator.onLine !== false) sync("auto"); }, 60000);
+
+  /* ---------------- HUD ---------------- */
+  function hud() {
+    const inLvl = S.screen === "nivel";
+    let h = '<header class="hud"><div class="hud-in"><span class="brand">⚡ <span>Misión <b>Energía Austral</b></span></span><div class="chips">';
+    if (S.nombre) {
+      h += '<span class="chip score" id="score" title="Puntaje total">⚡ ' + hudTotal() + " / " + MAX_TOTAL + "</span>";
+      if (inLvl) h += '<span class="chip">' + NV[S.lv].ico + " Nivel " + NV[S.lv].id + "</span>";
+      if (S.partida && S.racha >= 2) h += '<span class="chip streak">🔥 Racha ' + S.racha + "</span>";
+      h += '<span class="chip" id="sync"></span>';
+      h += '<button class="icon-btn" data-act="mute" aria-label="Sonido">' + (S.mute ? "🔇" : "🔊") + "</button>";
+      if (S.screen !== "mapa" && S.screen !== "intro") h += '<button class="icon-btn" data-act="to-map">🗺️ Mapa</button>';
+    }
+    h += "</div></div>";
+    if (inLvl) {
+      const idx = FASES.findIndex((f) => f[0] === S.fase);
+      h += '<div class="lvlbar"><div class="phases">' + FASES.map((f, i) => '<div class="phase ' + (i < idx ? "done" : i === idx ? "now" : "") + '">' + f[1] + "</div>").join("") + "</div></div>";
+    }
+    return h + "</header>";
+  }
+  function footer() {
+    return '<footer><div class="row"><span>' + esc(C.escuela) + " · " + esc(C.docente) + " · " + esc(C.curso) + '</span><span class="spacer"></span>' +
+      (S.nombre ? '<span id="reset-zone"><button class="linkish" data-act="reset-ask" style="color:var(--ink2)">¿No sos ' + esc(firstName()) + "? Cambiar de estudiante</button></span>" : "") + "</div></footer>";
+  }
+  function render(top) {
+    const y = window.scrollY;
+    $("#root").innerHTML = hud() + '<main id="app">' + (SCREENS[S.screen] || SCREENS.intro)() + "</main>" + footer();
+    setSyncChip();
+    if (AFTER[S.screen]) AFTER[S.screen]();
+    window.scrollTo(0, top ? 0 : y);
+  }
+  function go(screen) { S.screen = screen; save(); render(true); }
+  function bumpScore() { const s = $("#score"); if (s) { s.textContent = "⚡ " + hudTotal() + " / " + MAX_TOTAL; s.classList.remove("bump"); void s.offsetWidth; s.classList.add("bump"); } }
+
+  const SCREENS = {}, AFTER = {};
+
+  /* ---------------- Portada ---------------- */
+  const HERO_SVG = '<svg viewBox="0 0 220 200" aria-hidden="true"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#173a5c"/><stop offset="1" stop-color="#0a1726"/></linearGradient></defs>' +
+    '<rect x="0" y="0" width="220" height="200" rx="20" fill="url(#sk)"/><path d="M0 150 L40 95 L70 125 L110 70 L150 120 L180 90 L220 140 L220 200 L0 200Z" fill="#132a42"/>' +
+    '<path d="M110 70 L122 86 L98 86Z" fill="#eef4f8"/><path d="M0 170 C30 160 60 180 90 170 S150 160 220 172 L220 200 L0 200Z" fill="#2ec4b6" opacity=".55"/>' +
+    '<g transform="translate(160 60)"><rect x="-2" y="0" width="4" height="95" fill="#a9bfd1"/><g class="spin" style="transform-origin:0 0;animation:spin 3s linear infinite"><path d="M0 0 L-6 -40 L6 -40Z" fill="#eef4f8"/><path d="M0 0 L-6 -40 L6 -40Z" fill="#eef4f8" transform="rotate(120)"/><path d="M0 0 L-6 -40 L6 -40Z" fill="#eef4f8" transform="rotate(240)"/></g><circle r="5" fill="#ffb703"/></g>' +
+    '<path d="M55 40 L42 72 L56 72 L46 100 L74 62 L59 62 L68 40Z" fill="#ffb703"/></svg><style>@keyframes spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.spin{animation:none!important}}</style>';
+  SCREENS.intro = function () {
+    return '<section class="hero"><div><div class="kicker">' + esc(C.subtitulo) + " · " + esc(C.curso) + '</div><h1>Misión Energía Austral</h1>' +
+      '<p class="lede">Ushuaia necesita energía y vos vas a demostrar que sabés cómo se produce. Superá los 4 niveles, sumá puntos y obtené tu certificado.</p></div>' + HERO_SVG + "</section>" +
+      '<div class="panel"><h3>¿Cómo se juega?</h3><div class="rules">' +
+      '<div class="rule"><b>4 niveles de profundidad</b>Reconocer → Comprender → Relacionar → Aplicar. En cada nivel aparecen los 4 temas de la compensación.</div>' +
+      '<div class="rule"><b>Leé, explorá, jugá</b>Cada nivel tiene una lectura, una explicación interactiva para practicar y un desafío que suma puntos.</div>' +
+      '<div class="rule"><b>Puntos</b>Acierto al primer intento: ' + C.puntosPrimerIntento + " pts. Al segundo: " + C.puntosSegundoIntento + " pts. Cada nivel vale " + MAX_NIVEL + " (total " + MAX_TOTAL + ').</div>' +
+      '<div class="rule"><b>Para avanzar</b>Necesitás ' + C.minimoParaAvanzar + " pts en el nivel. Tenés hasta " + C.intentosMaximos + " intentos y se guarda tu mejor puntaje.</div></div></div>" +
+      '<div class="panel">' + (S.nombre ? '<div class="fb info">Ya empezaste como <b>' + esc(S.nombre) + '</b>. Seguís donde quedaste.</div><button class="btn" data-act="to-map">Continuar mi misión</button>' :
+      '<div class="field"><label for="name"><b>Tu nombre y apellido completos</b></label><input id="name" class="input" autocomplete="name" placeholder="Por ejemplo: Ana Belén Gómez">' +
+      '<span class="small muted">Escribilo como querés que aparezca en tu certificado.</span></div><p class="small muted" style="margin:0">Así va a quedar:</p><div class="name-preview" id="preview"></div><div id="name-err"></div>' +
+      '<button class="btn" data-act="start" id="start-btn" disabled>Comenzar la misión 🚀</button>') + "</div>";
+  };
+  function cleanName(v) { return String(v || "").replace(/\s+/g, " ").trim().split(" ").map((w) => w.split("-").map((p) => (p ? p.charAt(0).toLocaleUpperCase("es") + p.slice(1).toLocaleLowerCase("es") : p)).join("-")).join(" "); }
+  function validName(v) { const p = v.split(" ").filter(Boolean); return p.length >= 2 && p.every((x) => x.replace(/[-']/g, "").length >= 2) && /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$/.test(v); }
+  AFTER.intro = function () {
+    const inp = $("#name"); if (!inp) return;
+    const upd = () => { const v = cleanName(inp.value); $("#preview").textContent = v; $("#start-btn").disabled = !validName(v);
+      $("#name-err").innerHTML = inp.value.trim() && !validName(v) ? '<p class="small" style="color:var(--coral)">Escribí al menos un nombre y un apellido, solo con letras.</p>' : ""; };
+    inp.addEventListener("input", upd); inp.addEventListener("keydown", (e) => { if (e.key === "Enter" && !$("#start-btn").disabled) $("#start-btn").click(); }); inp.focus();
+  };
+
+  /* ---------------- Mapa ---------------- */
+  const unlocked = (i) => i === 0 || S.completo[i - 1];
+  SCREENS.mapa = function () {
+    const all = S.completo.every(Boolean);
+    let h = '<div class="panel edge"><div class="kicker">Mapa de la misión</div><h2>¡Hola, ' + esc(firstName()) + '!</h2><p class="muted" style="margin:0">' +
+      (all ? "Completaste los cuatro niveles. Mirá tu informe final y descargá tu certificado." : "Avanzá nivel por nivel. Cada uno profundiza más en los mismos cuatro temas.") + "</p></div><div class=\"map\">";
+    NV.forEach((n, i) => {
+      const lock = !unlocked(i), cur = !lock && !S.completo[i], left = C.intentosMaximos - S.intentos[i];
+      let meta = lock ? "🔒 Se desbloquea al completar el nivel " + i : S.completo[i] ? (S.aprobado[i] ? "Completado" : "Completado sin alcanzar el mínimo") + " · mejor puntaje " + S.mejor[i] + "/" + MAX_NIVEL + " · intentos " + S.intentos[i] + "/" + C.intentosMaximos :
+        S.intentos[i] ? "Mejor puntaje " + S.mejor[i] + "/" + MAX_NIVEL + " · te quedan " + left + " intento(s)" : "Listo para empezar";
+      h += '<button class="lvl-card ' + (S.completo[i] ? "done " : "") + (cur ? "current" : "") + '" data-act="open-lv" data-i="' + i + '"' + (lock ? " disabled" : "") + '><div class="lvl-ico">' + (lock ? "🔒" : n.ico) + '</div><div><div class="kicker">Nivel ' + n.id + " · rango " + esc(n.rango) + "</div><h3 style=\"margin:0\">" + esc(n.nombre) + '</h3><div class="lvl-meta">' + meta + '</div><div class="tema-dots">' +
+        TEMA_IDS.map((t) => '<span class="tdot t-' + t + '">' + TM[t].ico + " " + TM[t].corto + "</span>").join("") + "</div></div><div>" + (S.intentos[i] ? stars(S.mejor[i]) : "") + "</div></button>";
+    });
+    h += "</div>";
+    if (all) h += '<div style="margin-top:1rem"><button class="btn" data-act="to-final">🏆 Ver informe final y certificado</button></div>';
+    return h;
+  };
+
+  /* ---------------- Nivel ---------------- */
+  const lvl = () => NV[S.lv];
+  function lvlHead(sub) { const n = lvl(); return '<div class="panel edge"><div class="kicker">Nivel ' + n.id + " · " + esc(n.nombre) + " · " + sub + "</div><h2>" + esc(n.mision) + "</h2></div>"; }
+  SCREENS.nivel = function () { return FASE[S.fase](); };
+  AFTER.nivel = function () { if (FASE_AFTER[S.fase]) FASE_AFTER[S.fase](); };
+  const FASE = {}, FASE_AFTER = {};
+  function setFase(f) { S.fase = f; save(); render(true); }
+  const canPlay = () => S.intentos[S.lv] < C.intentosMaximos || (S.partida && S.partida.lv === S.lv);
+
+  /* Lectura */
+  FASE.lectura = function () {
+    const n = lvl(), rd = S.leidas[S.lv] || (S.leidas[S.lv] = n.lectura.map(() => false));
+    let h = lvlHead("Lectura") + '<div class="panel"><p class="muted">Leé cada parte con atención. Cuando la entiendas, marcala con <b>“Lo entendí”</b>. Lo que leas acá es lo que vas a necesitar en el desafío.</p>';
+    n.lectura.forEach((s, i) => {
+      h += '<section class="reading-sec" style="--sec:var(--t-' + s.tema + ')"><h3>' + s.titulo + "</h3>" + s.html +
+        '<button class="btn ghost sm got-it ' + (rd[i] ? "on" : "") + '" data-act="read" data-i="' + i + '">' + (rd[i] ? "✓ Lo entendí" : "Lo entendí") + "</button></section>";
+    });
+    const all = rd.every(Boolean), exDone = exComplete(S.lv);
+    h += '<div class="row" style="margin-top:1rem"><button class="btn" data-act="to-explora"' + (all ? "" : " disabled") + ">" + (exDone ? "Volver a la explicación interactiva" : "Ir a la explicación interactiva 🧪") + "</button>" +
+      (exDone && all && canPlay() ? '<button class="btn teal" data-act="to-desafio">Ir directo al desafío 🎮</button>' : "") +
+      (S.intentos[S.lv] ? '<button class="btn ghost" data-act="to-informe">📋 Mi informe</button>' : "") +
+      (all ? "" : '<span class="small muted">Marcá las ' + rd.length + " partes para continuar (" + rd.filter(Boolean).length + "/" + rd.length + ").</span>") + "</div></div>";
+    return h;
+  };
+
+  /* Explicación interactiva */
+  function exState() { return S.ex[S.lv] || (S.ex[S.lv] = {}); }
+  function exComplete(i) {
+    const it = NV[i].interactivo, e = S.ex[i]; if (!e) return false;
+    if (it.tipo === "memo") return (e.matched || []).length === it.pares.length * 2;
+    if (it.tipo === "chain") return Object.keys(e.done || {}).length === it.centrales.length;
+    if (it.tipo === "xray") return Object.keys(e.ans || {}).length === it.puntos.length;
+    if (it.tipo === "cards") return Object.keys(e.ans || {}).length === it.cartas.length;
+    return true;
+  }
+  FASE.explora = function () {
+    const it = lvl().interactivo, done = exComplete(S.lv);
+    return lvlHead("Explicación interactiva") + '<div class="panel"><h3>' + esc(it.titulo) + '</h3><p class="muted">' + esc(it.intro) + "</p>" + EX[it.tipo](it) + "</div>" +
+      '<div class="panel"><div class="row">' + (canPlay() ? '<button class="btn" data-act="to-desafio"' + (done ? "" : " disabled") + ">¡Estoy listo/a! Ir al desafío 🎮</button>" : '<button class="btn ghost" data-act="to-informe">📋 Mi informe</button>') +
+      '<button class="btn ghost" data-act="to-lectura">📖 Releer</button>' + (done ? "" : '<span class="small muted">Completá la actividad para desbloquear el desafío.</span>') + "</div></div>";
+  };
+  const EX = {};
+
+  /* Memotest */
+  EX.memo = function (it) {
+    const e = exState();
+    if (!e.deck) { e.deck = shuffle(range(it.pares.length * 2)); e.open = []; e.matched = []; e.moves = 0; save(); }
+    let h = '<div class="memo">';
+    e.deck.forEach((c) => {
+      const p = it.pares[c >> 1], isTerm = c % 2 === 0, up = e.open.includes(c) || e.matched.includes(c);
+      const cls = "mcard " + (isTerm ? "term " : "") + (e.matched.includes(c) ? "matched" : up ? "up" : "back");
+      h += '<button class="' + cls + '" data-act="memo" data-c="' + c + '" aria-label="' + (up ? esc(isTerm ? p[1] : p[2]) : "Carta boca abajo") + '">' + (up ? (isTerm ? "" : "") + esc(isTerm ? p[1] : p[2]) : "⚡") + "</button>";
+    });
+    h += '</div><p class="prog-note">Parejas encontradas: <b>' + e.matched.length / 2 + "/" + it.pares.length + "</b> · Movimientos: " + e.moves + "</p>";
+    if (e.msg) h += '<div class="fb ' + e.msg[0] + '">' + e.msg[1] + "</div>";
+    return h;
+  };
+  let memoLock = false;
+  function memoClick(c) {
+    const it = lvl().interactivo, e = exState();
+    if (memoLock || e.matched.includes(c) || e.open.includes(c)) return;
+    e.open.push(c);
+    if (e.open.length === 2) {
+      e.moves++;
+      const [a, b] = e.open;
+      if (a >> 1 === b >> 1) {
+        e.matched.push(a, b); e.open = []; const p = it.pares[a >> 1];
+        e.msg = ["ok", "✅ <b>" + esc(p[1]) + "</b>: " + esc(p[2]) + " <span class=\"tdot t-" + p[0] + "\">" + TM[p[0]].corto + "</span>"]; chime(true);
+        if (e.matched.length === it.pares.length * 2) { e.msg = ["ok", "🎉 ¡Completaste el memotest en " + e.moves + " movimientos! Ya podés ir al desafío."]; sync("progreso"); }
+      } else {
+        e.msg = ["warn", "No son pareja. Recordá dónde estaba cada carta."]; memoLock = true;
+        setTimeout(() => { e.open = []; memoLock = false; save(); render(); }, 1100);
+      }
+    }
+    save(); render();
+  }
+
+  /* Armá la central */
+  EX.chain = function (it) {
+    const e = exState();
+    if (e.sel == null) { e.sel = 0; e.prog = {}; e.done = {}; e.pool = {}; }
+    const ci = e.sel, c = it.centrales[ci], prog = e.prog[ci] || 0;
+    if (!e.pool[ci]) { e.pool[ci] = shuffle(c.c.map((x) => x[0]).concat(c.x)); save(); }
+    let h = '<div class="tabs">' + it.centrales.map((x, i) => '<button class="tab ' + (i === ci ? "on " : "") + (e.done[i] ? "done" : "") + '" data-act="ch-tab" data-i="' + i + '">' + esc(x.n) + "</button>").join("") + "</div>";
+    h += "<h3>" + esc(c.n) + '</h3><p class="small muted">Transformación: <b>' + esc(c.tr) + '</b></p><div class="chain">' +
+      c.c.map((x, i) => (i ? "<i>›</i>" : "") + '<span class="slot ' + (i < prog ? "fill" : "") + '">' + (i < prog ? esc(x[0]) : i + 1) + "</span>").join("") + "</div>";
+    if (prog < c.c.length) {
+      h += '<p class="small"><b>¿Qué viene ' + (prog ? "después" : "primero") + "?</b> Tocá la pieza correcta:</p><div class=\"pool\">" +
+        e.pool[ci].filter((nm) => !c.c.slice(0, prog).some((x) => x[0] === nm)).map((nm) => '<button class="tok" data-act="ch-pick" data-n="' + esc(nm) + '">' + esc(nm) + "</button>").join("") + "</div>";
+    } else {
+      h += '<div class="fb ok"><b>¡Central armada!</b><ol style="margin:.4rem 0 0">' + c.c.map((x) => "<li><b>" + esc(x[0]) + "</b>: " + esc(x[1]) + "</li>").join("") + "</ol></div>";
+      const next = it.centrales.findIndex((_, i) => !e.done[i]);
+      if (next >= 0) h += '<button class="btn teal sm" data-act="ch-tab" data-i="' + next + '">Siguiente central: ' + esc(it.centrales[next].n) + "</button>";
+    }
+    if (e.msg && prog < c.c.length) h += '<div class="fb ' + e.msg[0] + '">' + e.msg[1] + "</div>";
+    h += '<p class="prog-note">Centrales armadas: <b>' + Object.keys(e.done).length + "/" + it.centrales.length + "</b></p>";
+    return h;
+  };
+  function chainPick(nm, el) {
+    const it = lvl().interactivo, e = exState(), ci = e.sel, c = it.centrales[ci], prog = e.prog[ci] || 0;
+    if (c.c[prog][0] === nm) {
+      e.prog[ci] = prog + 1; e.msg = ["ok", "✅ " + esc(c.c[prog][1])]; chime(true);
+      if (prog + 1 === c.c.length) { e.done[ci] = true; if (Object.keys(e.done).length === it.centrales.length) sync("progreso"); }
+    } else if (c.x.includes(nm)) { e.msg = ["bad", "❌ <b>" + esc(nm) + "</b> no pertenece a esta central. Pensá qué fuente de energía usa."]; chime(false); if (el) el.classList.add("shake"); }
+    else { e.msg = ["warn", "🤔 <b>" + esc(nm) + "</b> sí es de esta central, pero todavía no le toca. ¿Por dónde pasa la energía antes?"]; chime(false); }
+    save(); setTimeout(render, el && el.classList.contains("shake") ? 300 : 0);
+  }
+
+  /* Rayos X */
+  const XRAY_SVG = function (it, e) {
+    let s = '<svg viewBox="0 0 800 420" role="img" aria-label="Esquema de una central hidroeléctrica">' +
+      '<defs><linearGradient id="xs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#173a5c"/><stop offset="1" stop-color="#0f2135"/></linearGradient></defs>' +
+      '<rect width="800" height="420" fill="url(#xs)"/><path d="M0 120 L60 60 L120 100 L190 40 L240 90 L240 420 L0 420Z" fill="#1d3a57"/>' +
+      '<path d="M0 130 L232 130 L250 335 L0 335Z" fill="#2563eb" opacity=".55"/><path d="M0 130 L232 130" stroke="#93c5fd" stroke-width="3"/>' +
+      '<path d="M232 85 L272 85 L318 345 L240 345Z" fill="#94a3b8" stroke="#cbd5e1" stroke-width="2"/>' +
+      '<rect x="246" y="95" width="22" height="16" fill="#ffb703"/><line x1="257" y1="95" x2="257" y2="72" stroke="#ffb703" stroke-width="4"/>' +
+      '<path d="M285 255 L455 340" stroke="#60a5fa" stroke-width="18" stroke-linecap="round"/>' +
+      '<rect x="440" y="200" width="210" height="170" fill="#334155" stroke="#64748b" stroke-width="2"/>' +
+      '<rect x="560" y="160" width="80" height="40" fill="#475569" stroke="#94a3b8" stroke-width="2"/><rect x="572" y="168" width="26" height="18" fill="#2ec4b6"/><rect x="604" y="168" width="26" height="18" fill="#2ec4b6"/>' +
+      '<circle cx="490" cy="345" r="22" fill="#0ea5e9" stroke="#e2e8f0" stroke-width="3"/><path d="M490 325 L490 365 M470 345 L510 345" stroke="#e2e8f0" stroke-width="3"/>' +
+      '<line x1="490" y1="323" x2="490" y2="262" stroke="#e2e8f0" stroke-width="6"/>' +
+      '<rect x="462" y="222" width="56" height="40" rx="6" fill="#f59e0b" stroke="#fde68a" stroke-width="2"/><text x="490" y="247" text-anchor="middle" font-size="14" fill="#1b1300" font-weight="700">G</text>' +
+      '<rect x="575" y="312" width="44" height="34" rx="4" fill="#a78bfa"/><path d="M520 242 L560 242 L560 180" stroke="#2ec4b6" stroke-width="2" stroke-dasharray="4 3" fill="none"/>' +
+      '<rect x="668" y="280" width="44" height="50" fill="#64748b" stroke="#cbd5e1" stroke-width="2"/><path d="M675 292 h30 M675 304 h30 M675 316 h30" stroke="#ffb703" stroke-width="3"/>' +
+      '<path d="M518 242 L668 300" stroke="#ffb703" stroke-width="2"/><path d="M750 370 L765 150 L780 370 M757 250 L773 250 M752 320 L778 320" stroke="#cbd5e1" stroke-width="3" fill="none"/>' +
+      '<path d="M712 290 L765 160 L800 150" stroke="#ffb703" stroke-width="2" fill="none"/>' +
+      '<path d="M440 370 L800 370 L800 420 L440 420Z" fill="#2563eb" opacity=".5"/><path d="M0 345 L440 345 L440 420 L0 420Z" fill="#3b2f2a"/>';
+    it.puntos.forEach((p) => {
+      const cls = "hs" + (e.ans && e.ans[p.n] != null ? " done" : "") + (e.sel === p.n ? " sel" : "");
+      s += '<g class="' + cls + '" data-act="xr-sel" data-n="' + p.n + '" tabindex="0" role="button" aria-label="Punto ' + p.n + '"><circle cx="' + p.x + '" cy="' + p.y + '" r="14"/><text x="' + p.x + '" y="' + (p.y + 5) + '" text-anchor="middle">' + p.n + "</text></g>";
+    });
+    return s + "</svg>";
+  };
+  EX.xray = function (it) {
+    const e = exState(); if (!e.ans) e.ans = {};
+    let h = '<div class="xray">' + XRAY_SVG(it, e) + '</div><div class="hs-list">' + it.puntos.map((p) => '<button class="tab ' + (e.sel === p.n ? "on " : "") + (e.ans[p.n] != null ? "done" : "") + '" data-act="xr-sel" data-n="' + p.n + '">' + p.n + "</button>").join("") + "</div>";
+    if (e.sel != null) {
+      const p = it.puntos.find((x) => x.n === e.sel), a = e.ans[p.n];
+      h += '<div class="panel" style="background:var(--panel2);margin:.4rem 0"><div class="kicker">Punto ' + p.n + "</div><h3>" + esc(p.nom) + "</h3><p>" + esc(p.fn) + "</p>";
+      if (a == null) h += "<p><b>¿A qué sistema técnico pertenece?</b></p><div class=\"stagebtns\">" + it.sistemas.map((s, k) => '<button class="opt" data-act="xr-ans" data-k="' + k + '">' + esc(s) + "</button>").join("") + "</div>";
+      else h += '<div class="fb ' + (a === p.s ? "ok" : "bad") + '">' + (a === p.s ? "✅ ¡Correcto! " : "❌ Elegiste " + esc(it.sistemas[a]) + ". ") + "Pertenece al sistema <b>" + esc(it.sistemas[p.s]) + "</b>.</div>";
+      h += "</div>";
+    } else h += '<div class="fb info">👆 Tocá un número del esquema para empezar.</div>';
+    const ok = it.puntos.filter((p) => e.ans[p.n] === p.s).length;
+    h += '<p class="prog-note">Puntos explorados: <b>' + Object.keys(e.ans).length + "/" + it.puntos.length + "</b> · aciertos de práctica: " + ok + "</p>";
+    return h;
+  };
+  FASE_AFTER.explora = function () {
+    document.querySelectorAll("g.hs").forEach((g) => g.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); g.dispatchEvent(new MouseEvent("click", { bubbles: true })); } }));
+  };
+
+  /* Cartas de bitácora */
+  EX.cards = function (it) {
+    const e = exState(); if (!e.ans) e.ans = {}; if (!e.order) { e.order = shuffle(range(it.cartas.length)); save(); }
+    let h = '<div class="scards">' + e.order.map((i, k) => { const a = e.ans[i];
+      return '<button class="scard ' + (e.sel === i ? "on " : "") + (a != null ? "done" : "") + '" data-act="cd-sel" data-i="' + i + '"><div class="kicker">Entrada ' + (k + 1) + (a != null ? " · " + esc(ET[it.cartas[i].s]) : "") + '</div><span class="small">' + esc(it.cartas[i].tx) + "</span></button>"; }).join("") + "</div>";
+    if (e.sel != null) {
+      const c = it.cartas[e.sel], a = e.ans[e.sel];
+      h += '<div class="panel" style="background:var(--panel2);margin-top:.8rem"><p><i>“' + esc(c.tx) + '”</i></p>';
+      if (a == null) h += "<p><b>¿En qué etapa del proyecto están?</b></p><div class=\"stagebtns\">" + ET.map((s, k) => '<button class="opt" data-act="cd-ans" data-k="' + k + '">' + (k + 1) + ". " + esc(s) + "</button>").join("") + "</div>";
+      else h += '<div class="fb ' + (a === c.s ? "ok" : "bad") + '">' + (a === c.s ? "✅ ¡Exacto! " : "❌ Elegiste “" + esc(ET[a]) + "”. ") + "Es <b>" + (c.s + 1) + ". " + esc(ET[c.s]) + "</b>. " + esc(c.ex) + "</div>";
+      h += "</div>";
+    } else h += '<div class="fb info" style="margin-top:.8rem">👆 Elegí una entrada de la bitácora.</div>';
+    h += '<p class="prog-note">Entradas analizadas: <b>' + Object.keys(e.ans).length + "/" + it.cartas.length + "</b></p>";
+    return h;
+  };
+
+  /* ---------------- Desafío ---------------- */
+  function buildPartida() {
+    const bank = lvl().banco, N = Math.min(C.preguntasPorNivel, bank.length), per = Math.max(1, Math.floor(N / TEMA_IDS.length));
+    const byT = {}; TEMA_IDS.forEach((t) => (byT[t] = shuffle(range(bank.length).filter((i) => bank[i].tema === t))));
+    let pick = []; TEMA_IDS.forEach((t) => (pick = pick.concat(byT[t].slice(0, per))));
+    const rest = shuffle(range(bank.length).filter((i) => !pick.includes(i)));
+    pick = shuffle(pick.concat(rest.slice(0, N - pick.length)));
+    S.partida = { lv: S.lv, qs: pick, i: 0, pts: 0, res: [], cur: null };
+    S.racha = 0; save();
+  }
+  function curQ() { const p = S.partida; return lvl().banco[p.qs[p.i]]; }
+  function initCur() {
+    const p = S.partida, q = curQ(); if (p.cur) return p.cur;
+    const c = { tries: 0, done: false, earned: 0, bad: [] };
+    if (q.t === "mc") c.perm = shuffle(range(q.o.length));
+    if (q.t === "sort") { c.place = {}; c.sel = null; c.tokOrder = shuffle(range(q.i.length)); }
+    if (q.t === "order") { let o = shuffle(range(q.i.length)); let g = 0; while (o.every((v, k) => v === k) && g++ < 10) o = shuffle(o); c.ord = o; }
+    p.cur = c; save(); return c;
+  }
+  FASE.desafio = function () {
+    if (!S.partida || S.partida.lv !== S.lv) buildPartida();
+    const p = S.partida, q = curQ(), c = initCur(), n = p.qs.length;
+    let h = '<div class="panel"><div class="qhead"><span class="qnum">Pregunta ' + (p.i + 1) + " de " + n + ' · <span class="tdot t-' + q.tema + '">' + TM[q.tema].ico + " " + TM[q.tema].corto + "</span></span>" +
+      '<span class="chip score">Nivel: ' + p.pts + " / " + MAX_NIVEL + '</span></div><div class="qbar"><i style="width:' + (100 * p.i) / n + '%"></i></div>' +
+      '<p class="qtext">' + esc(q.q) + "</p>" + Q[q.t](q, c);
+    if (c.done) {
+      h += '<div class="fb ' + (c.earned === C.puntosPrimerIntento ? "ok" : c.earned > 0 ? "warn" : "bad") + '"><b>' + (c.earned === C.puntosPrimerIntento ? "¡Excelente! +" + c.earned + " pts" : c.earned > 0 ? "Bien, lo lograste: +" + c.earned + " pts" : "Esta vez no sumaste puntos") + "</b><br>" + esc(q.e) +
+        (c.earned < C.puntosPrimerIntento ? '<br><span class="small">📌 Tema para repasar: <b>' + esc(TM[q.tema].nombre) + "</b></span>" : "") + "</div>" +
+        '<button class="btn" data-act="q-next" id="q-next">' + (p.i + 1 < n ? "Siguiente pregunta ›" : "Ver mi informe del nivel 📋") + "</button>";
+    } else if (c.tries === 1) h += '<div class="fb warn">🤏 ¡Casi! Tenés una oportunidad más (vale ' + C.puntosSegundoIntento + " pts).</div>";
+    return h + "</div>";
+  };
+  FASE_AFTER.desafio = function () { const b = $("#q-next"); if (b) b.focus(); };
+  const Q = {};
+  Q.mc = function (q, c) {
+    return '<div class="opts">' + c.perm.map((k) => { let cls = "";
+      if (c.done && k === q.a) cls = "ok"; else if (c.bad.includes(k)) cls = "bad";
+      return '<button class="opt ' + cls + '" data-act="q-mc" data-k="' + k + '"' + (c.done || c.bad.includes(k) ? " disabled" : "") + ">" + esc(q.o[k]) + "</button>"; }).join("") + "</div>";
+  };
+  Q.tf = function (q, c) {
+    return '<div class="opts two">' + [true, false].map((v) => { let cls = "";
+      if (c.done && v === q.a) cls = "ok"; else if (c.done && c.pick === v) cls = "bad";
+      return '<button class="opt ' + cls + '" data-act="q-tf" data-v="' + v + '"' + (c.done ? " disabled" : "") + ">" + (v ? "✔ Verdadero" : "✘ Falso") + "</button>"; }).join("") + "</div>";
+  };
+  Q.sort = function (q, c) {
+    const placed = (k) => c.place[k] != null;
+    const tok = (k) => { let cls = "tok"; if (c.sel === k) cls += " sel"; if (c.marks) cls += c.marks[k] ? " ok" : " bad";
+      return '<button class="' + cls + '" data-act="q-tok" data-k="' + k + '"' + (c.done ? " disabled" : "") + ">" + esc(q.i[k][0]) + "</button>"; };
+    let h = '<p class="small muted">Tocá una tarjeta y después tocá el grupo donde va. Para moverla, tocála de nuevo.</p><div class="pool" aria-label="Tarjetas sin ubicar">' +
+      (c.tokOrder.filter((k) => !placed(k)).map(tok).join("") || '<span class="small muted">Todas ubicadas ✔</span>') + '</div><div class="buckets">';
+    q.b.forEach((b, bi) => { h += '<div class="bucket" data-act="q-bucket" data-b="' + bi + '" role="button" tabindex="0"><h4>' + esc(b) + "</h4>" + c.tokOrder.filter((k) => c.place[k] === bi).map(tok).join("") + "</div>"; });
+    h += "</div>";
+    if (c.done && c.earned < C.puntosPrimerIntento) h += '<div class="fb info"><b>Ubicación correcta:</b> ' + q.b.map((b, bi) => "<b>" + esc(b) + "</b>: " + q.i.filter((x) => x[1] === bi).map((x) => esc(x[0])).join(", ")).join(" · ") + "</div>";
+    if (!c.done) h += '<button class="btn teal" data-act="q-check"' + (q.i.every((_, k) => placed(k)) ? "" : " disabled") + ">Comprobar</button>";
+    return h;
+  };
+  Q.order = function (q, c) {
+    let h = '<p class="small muted">Usá las flechas para ordenar de arriba (primero) hacia abajo (último).</p><ol class="order-list">';
+    c.ord.forEach((k, pos) => { const m = c.marks ? (c.marks[pos] ? " ok" : " bad") : "";
+      h += '<li class="order-item' + m + '"><span class="n">' + (pos + 1) + '</span><span class="tx">' + esc(q.i[k]) + "</span>" +
+        (c.done ? "" : '<button class="mv" data-act="q-up" data-p="' + pos + '" aria-label="Subir"' + (pos ? "" : " disabled") + '>▲</button><button class="mv" data-act="q-down" data-p="' + pos + '" aria-label="Bajar"' + (pos < c.ord.length - 1 ? "" : " disabled") + ">▼</button>") + "</li>"; });
+    h += "</ol>";
+    if (c.done && c.earned < C.puntosPrimerIntento) h += '<div class="fb info"><b>Orden correcto:</b> ' + q.i.map((x, i) => i + 1 + ". " + esc(x)).join(" › ") + "</div>";
+    if (!c.done) h += '<button class="btn teal" data-act="q-check">Comprobar</button>';
+    return h;
+  };
+  function award(c, el) {
+    const p = S.partida, q = curQ(); c.done = true; p.pts += c.earned;
+    p.res.push({ tema: q.tema, p: c.earned, m: C.puntosPrimerIntento });
+    if (c.earned === C.puntosPrimerIntento) { S.racha++; S.rachaMax = Math.max(S.rachaMax, S.racha); } else S.racha = 0;
+    if (c.earned > 0) { chime(true); floater("+" + c.earned, el); } else chime(false);
+    save(); render(); bumpScore(); say(c.earned ? "Correcto, más " + c.earned + " puntos" : "Respuesta incorrecta");
+  }
+  function check(el) {
+    const q = curQ(), c = S.partida.cur; let okN = 0, tot;
+    if (q.t === "sort") { tot = q.i.length; c.marks = {}; q.i.forEach((x, k) => { c.marks[k] = c.place[k] === x[1]; if (c.marks[k]) okN++; }); }
+    else { tot = q.i.length; c.marks = c.ord.map((k, pos) => k === pos); okN = c.marks.filter(Boolean).length; }
+    if (okN === tot) { c.earned = c.tries === 0 ? C.puntosPrimerIntento : C.puntosSegundoIntento; return award(c, el); }
+    if (c.tries === 0) { c.tries = 1; chime(false); save(); render(); say("Hay " + (tot - okN) + " elementos mal ubicados"); return; }
+    c.earned = Math.round((C.puntosSegundoIntento * okN) / tot); award(c, el);
+  }
+  function nextQ() {
+    const p = S.partida;
+    if (p.i + 1 < p.qs.length) { p.i++; p.cur = null; save(); render(true); return; }
+    finishPartida();
+  }
+  function finishPartida() {
+    const p = S.partida, i = p.lv, ts = {};
+    TEMA_IDS.forEach((t) => (ts[t] = { p: 0, m: 0 }));
+    p.res.forEach((r) => { ts[r.tema].p += r.p; ts[r.tema].m += r.m; });
+    S.intentos[i]++; S.ultimo[i] = p.pts; S.temasUltimo[i] = ts;
+    if (p.pts >= S.mejor[i] || !S.temasMejor[i]) { S.mejor[i] = Math.max(S.mejor[i], p.pts); S.temasMejor[i] = ts; }
+    if (p.pts >= C.minimoParaAvanzar) S.aprobado[i] = true;
+    if (S.aprobado[i] || S.intentos[i] >= C.intentosMaximos) S.completo[i] = true;
+    S.partida = null; S.racha = 0;
+    if (S.completo.every(Boolean) && !S.fin) { S.fin = Date.now(); S.codigo = hash(S.id + S.nombre + total()); }
+    else if (S.completo.every(Boolean)) S.codigo = hash(S.id + S.nombre + total());
+    S.fase = "informe"; save(); render(true);
+    sync(S.completo.every(Boolean) ? "final" : "progreso");
+  }
+
+  /* ---------------- Informe del nivel ---------------- */
+  function temaRows(ts, consejos) {
+    return TEMA_IDS.map((t) => { const x = ts[t]; if (!x || !x.m) return ""; const r = x.p / x.m, st = status(r), col = r >= 0.8 ? "var(--ok)" : r >= 0.5 ? "var(--amber)" : "var(--coral)";
+      return '<div class="tema-row"><span><span class="tdot t-' + t + '">' + TM[t].ico + "</span> <b>" + esc(TM[t].nombre) + '</b> <span class="small muted">(' + x.p + "/" + x.m + ' pts)</span></span><span class="status ' + st[2] + '">' + st[1] + " " + st[0] + '</span><div class="meter"><i style="width:' + Math.round(100 * r) + "%;background:" + col + '"></i></div>' +
+        (r < 0.8 && consejos ? '<div class="advice">👉 ' + esc(consejos[t]) + "</div>" : "") + "</div>"; }).join("");
+  }
+  FASE.informe = function () {
+    const i = S.lv, n = lvl(), pts = S.ultimo[i], ts = S.temasUltimo[i] || {}, left = C.intentosMaximos - S.intentos[i];
+    const passed = pts >= C.minimoParaAvanzar, refz = TEMA_IDS.filter((t) => ts[t] && ts[t].m && ts[t].p / ts[t].m < 0.8);
+    let h = lvlHead("Informe") + '<div class="panel"><div class="row"><div><div class="kicker">Puntaje de este intento</div><div class="big-score">' + pts + '<span style="font-size:1.2rem;color:var(--ink2)"> / ' + MAX_NIVEL + "</span></div></div>" +
+      '<div style="margin-left:auto;text-align:right">' + stars(pts) + '<div class="small muted">Intento ' + S.intentos[i] + " de " + C.intentosMaximos + " · mejor: " + S.mejor[i] + "</div></div></div>";
+    if (passed) h += '<div class="fb ok">🎉 ¡Superaste el nivel <b>' + esc(n.nombre) + "</b>! Ganaste el rango <b>" + esc(n.rango) + "</b>.</div>";
+    else if (left > 0) h += '<div class="fb warn">Necesitás <b>' + C.minimoParaAvanzar + " pts</b> para avanzar. Te quedan <b>" + left + " intento(s)</b>. Repasá los temas marcados y volvé a intentarlo: las preguntas cambian.</div>";
+    else h += '<div class="fb bad">Usaste los ' + C.intentosMaximos + " intentos. El nivel queda registrado con tu mejor puntaje (" + S.mejor[i] + ") y podés continuar, pero <b>tenés que estudiar los temas marcados</b> antes de la mesa de compensación.</div>";
+    h += "</div><div class=\"panel\"><h3>¿Qué contenidos tenés que reforzar?</h3>" +
+      (refz.length ? '<p class="muted small">✅ Dominado (80% o más) · 🔁 Repasar (50 a 79%) · ⚠️ Reforzar (menos de 50%)</p>' : '<div class="fb ok">¡Dominaste los cuatro temas en este nivel! 💪</div>') + temaRows(ts, n.consejos) + "</div>";
+    h += '<div class="panel"><div class="row">';
+    if (S.completo[i]) h += i + 1 < NV.length ? '<button class="btn" data-act="open-lv" data-i="' + (i + 1) + '">Ir al nivel ' + (i + 2) + " " + NV[i + 1].ico + " ›</button>" : '<button class="btn" data-act="to-final">🏆 Ver informe final y certificado</button>';
+    if (left > 0) h += '<button class="btn ' + (S.completo[i] ? "ghost" : "") + '" data-act="retry">' + (passed ? "Mejorar mi puntaje (" + left + " intento/s)" : "Reintentar el desafío 🔄") + "</button>";
+    h += '<button class="btn ghost" data-act="to-lectura">📖 Volver a leer</button><button class="btn ghost" data-act="to-map">🗺️ Mapa</button></div></div>';
+    return h;
+  };
+
+  /* ---------------- Informe final ---------------- */
+  SCREENS.final = function () {
+    const g = temasGlobal(), refz = listaRefuerzo(), pct = Math.round((100 * total()) / MAX_TOTAL);
+    let h = '<div class="panel edge"><div class="kicker">Informe final</div><h2>¡Misión cumplida, ' + esc(firstName()) + "!</h2>" +
+      '<div class="row"><div><div class="big-score">' + total() + '<span style="font-size:1.2rem;color:var(--ink2)"> / ' + MAX_TOTAL + '</span></div><div class="muted">' + pct + "% del puntaje máximo</div></div></div></div>";
+    h += '<div class="panel"><h3>Tus niveles</h3>' + NV.map((n, i) => '<div class="tema-row"><span>' + n.ico + " <b>Nivel " + n.id + " · " + esc(n.nombre) + '</b> <span class="small muted">(' + S.intentos[i] + " intento/s" + (S.aprobado[i] ? "" : ", sin alcanzar el mínimo") + ")</span></span><span>" + stars(S.mejor[i]) + " <b>" + S.mejor[i] + "</b></span></div>").join("") + "</div>";
+    h += '<div class="panel"><h3>Dominio de cada tema (todos los niveles)</h3>' + temaRows(g, null) + "</div>";
+    h += '<div class="panel"><h3>📌 Antes de la mesa, reforzá esto</h3>' + (refz.length ? "<ul>" + refz.map((x) => "<li><b>" + esc(TM[x.tema].corto) + "</b> (nivel " + NV[x.lv].id + ", " + status(x.r)[0].toLowerCase() + "): " + esc(NV[x.lv].consejos[x.tema]) + "</li>").join("") + "</ul>" : '<div class="fb ok">No tenés temas pendientes. ¡Llegás muy bien preparado/a! 🌟</div>') + "</div>";
+    h += '<div class="panel"><div class="row"><button class="btn" data-act="to-cert">🎓 Ver mi certificado</button><button class="btn ghost" data-act="to-map">🗺️ Mapa</button></div></div>';
+    return h;
+  };
+
+  /* ---------------- Certificado ---------------- */
+  SCREENS.cert = function () {
+    const pct = Math.round((100 * total()) / MAX_TOTAL);
+    return '<div class="panel"><div class="row"><button class="btn" data-act="print">🖨️ Descargar / imprimir (Guardar como PDF)</button><button class="btn ghost" data-act="to-final">‹ Volver al informe</button></div>' +
+      '<p class="small muted" style="margin:.6rem 0 0">Tu profesor también recibe una copia de este certificado.</p></div>' +
+      '<div class="cert" id="cert"><div style="font-size:.85rem;letter-spacing:.12em;text-transform:uppercase">' + esc(C.escuela) + " · Educación Tecnológica · " + esc(C.curso) + "</div>" +
+      "<h1>Certificado de logro</h1><div>Se certifica que</div><div class=\"cname\">" + esc(S.nombre) + "</div>" +
+      "<div>completó la <b>Misión Energía Austral</b>, recorrido de autoaprendizaje de la etapa de compensación, superando los niveles<br><b>Reconocer · Comprender · Relacionar · Aplicar</b></div>" +
+      '<div class="cscore">' + NV.map((n, i) => "<div><b>" + S.mejor[i] + "</b>Nivel " + n.id + "</div>").join("") + "<div><b>" + total() + " / " + MAX_TOTAL + "</b>Puntaje total (" + pct + "%)</div></div>" +
+      "<div>Ushuaia, Tierra del Fuego · " + fecha(S.fin) + '</div><div class="sign"><div>' + esc(S.nombre) + "<br>Estudiante</div><div>" + esc(C.docente) + "<br>Docente</div></div>" +
+      '<div class="code">Código de verificación: <b>' + esc(S.codigo || "") + "</b></div></div>";
+  };
+
+  /* ---------------- Acciones ---------------- */
+  function openLevel(i) {
+    if (!unlocked(i)) return; S.lv = i; S.screen = "nivel";
+    if (S.partida && S.partida.lv === i) S.fase = "desafio";
+    else if (S.intentos[i]) S.fase = "informe";
+    else if (!S.leidas[i] || !S.leidas[i].every(Boolean)) S.fase = "lectura";
+    else S.fase = exComplete(i) ? "desafio" : "explora";
+    save(); render(true);
+  }
+  const ACT = {
+    start() { const v = cleanName($("#name").value); if (!validName(v)) return; S.nombre = v; S.id = uid(); S.inicio = Date.now(); S.screen = "mapa"; save(); render(true); sync("registro"); },
+    "to-map"() { go("mapa"); }, "to-final"() { go("final"); }, "to-cert"() { go("cert"); }, print() { window.print(); },
+    mute() { S.mute = !S.mute; save(); render(); },
+    "open-lv"(el) { openLevel(+el.dataset.i); },
+    read(el) { const r = S.leidas[S.lv]; r[+el.dataset.i] = !r[+el.dataset.i]; save(); render(); if (r.every(Boolean)) sync("progreso"); },
+    "to-lectura"() { setFase("lectura"); }, "to-explora"() { setFase("explora"); }, "to-informe"() { if (S.intentos[S.lv]) setFase("informe"); },
+    "to-desafio"() { if (!exComplete(S.lv) || !canPlay()) return; setFase("desafio"); },
+    retry() { if (S.intentos[S.lv] >= C.intentosMaximos) return; S.partida = null; setFase("desafio"); },
+    memo(el) { memoClick(+el.dataset.c); },
+    "ch-tab"(el) { const e = exState(); e.sel = +el.dataset.i; e.msg = null; save(); render(); },
+    "ch-pick"(el) { chainPick(el.dataset.n, el); },
+    "xr-sel"(el) { const e = exState(); e.sel = +el.dataset.n; save(); render(); },
+    "xr-ans"(el) { const it = lvl().interactivo, e = exState(), p = it.puntos.find((x) => x.n === e.sel); e.ans[p.n] = +el.dataset.k; chime(+el.dataset.k === p.s); save(); render(); if (exComplete(S.lv)) sync("progreso"); },
+    "cd-sel"(el) { const e = exState(); e.sel = +el.dataset.i; save(); render(); },
+    "cd-ans"(el) { const it = lvl().interactivo, e = exState(); e.ans[e.sel] = +el.dataset.k; chime(+el.dataset.k === it.cartas[e.sel].s); save(); render(); if (exComplete(S.lv)) sync("progreso"); },
+    "q-mc"(el) { const q = curQ(), c = S.partida.cur, k = +el.dataset.k; if (c.done) return;
+      if (k === q.a) { c.earned = c.tries === 0 ? C.puntosPrimerIntento : C.puntosSegundoIntento; return award(c, el); }
+      c.bad.push(k); if (c.tries === 0 && q.o.length > 2) { c.tries = 1; chime(false); el.classList.add("shake"); save(); setTimeout(render, 300); return; }
+      c.earned = 0; award(c, el); },
+    "q-tf"(el) { const q = curQ(), c = S.partida.cur; if (c.done) return; c.pick = el.dataset.v === "true"; c.earned = c.pick === q.a ? C.puntosPrimerIntento : 0; award(c, el); },
+    "q-tok"(el) { const c = S.partida.cur, k = +el.dataset.k; if (c.done) return;
+      const bk = el.closest(".bucket"); if (bk && c.sel != null && c.sel !== k) return ACT["q-bucket"](bk);
+      c.sel = c.sel === k ? null : k; if (c.marks) c.marks = null; save(); render(); },
+    "q-bucket"(el) { const c = S.partida.cur; if (c.done || c.sel == null) return; c.place[c.sel] = +el.dataset.b; c.sel = null; c.marks = null; save(); render(); },
+    "q-up"(el) { const c = S.partida.cur, p = +el.dataset.p; [c.ord[p - 1], c.ord[p]] = [c.ord[p], c.ord[p - 1]]; c.marks = null; save(); render(); },
+    "q-down"(el) { const c = S.partida.cur, p = +el.dataset.p; [c.ord[p + 1], c.ord[p]] = [c.ord[p], c.ord[p + 1]]; c.marks = null; save(); render(); },
+    "q-check"(el) { check(el); }, "q-next"() { nextQ(); },
+    "reset-ask"() { $("#reset-zone").innerHTML = '<span class="small">Se borra el progreso guardado en esta computadora (tu profesor conserva lo enviado a la planilla). ¿Seguro? </span><button class="linkish" data-act="reset-yes" style="color:var(--coral)">Sí, cambiar</button> · <button class="linkish" data-act="reset-no">No</button>'; },
+    "reset-yes"() { const m = S.mute; S = fresh(); S.mute = m; save(); render(true); }, "reset-no"() { render(); }
+  };
+  document.addEventListener("click", (ev) => {
+    const el = ev.target.closest("[data-act]"); if (!el || el.disabled) return;
+    if (el.classList.contains("tok") && el.closest(".bucket")) ev.stopPropagation();
+    const f = ACT[el.dataset.act]; if (f) f(el);
+  });
+  document.addEventListener("keydown", (ev) => { const b = ev.target.closest && ev.target.closest(".bucket"); if (b && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); ACT["q-bucket"](b); } });
+
+  if (S.screen === "nivel" && !S.nombre) S.screen = "intro";
+  render(true);
+  if (S.pendiente) sync("auto");
+})();
+</script>
+</body>
+</html>
