@@ -269,16 +269,18 @@ window.NIVELES = [
   id: 1, nombre: "Reconocer", rango: "Explorador/a", ico: "🔍",
   mision: "Primera misión: reconocer las piezas del mapa. Vas a identificar los conceptos básicos de los cuatro temas.",
   lectura: [
-    { tema: "energia", titulo: "⚡ Energía, fuentes y recursos", html: `
+    { tema: "energia", titulo: "⚡ Energía: recursos, fuentes y transformaciones", html: `
 <p>La <b>energía</b> es la <b>capacidad de un cuerpo para realizar un trabajo</b>. Aparece en distintas formas: <b>mecánica</b> (cinética por el movimiento, potencial por la posición), <b>térmica</b>, <b>química</b>, <b>luminosa</b>, <b>sonora</b>, <b>eléctrica</b> y <b>nuclear</b>.</p>
-<p>Una <b>fuente de energía</b> es el fenómeno natural o el material del que obtenemos energía: el viento, el sol, el agua de un río, el gas natural, el uranio. La <b>cantidad de energía disponible</b> de una fuente se llama <b>recurso energético</b>.</p>
-<div class="box key"><b class="lab">Para no confundir</b>El viento del Canal Beagle es una <b>fuente</b>. Cuánto viento aprovechable hay en Ushuaia es el <b>recurso energético</b>.</div>
-<p>Según si se agotan o no, las fuentes son:</p>
-<ul><li><b>Renovables</b>: la naturaleza las repone y son prácticamente inagotables (agua, viento, sol, biomasa).</li>
-<li><b>No renovables</b>: tardaron millones de años en formarse y se agotan al usarlas (carbón, petróleo, gas natural, uranio).</li></ul>` },
+<p>Para aprovecharla trabajamos con tres ideas que van siempre juntas:</p>
+<ul><li><b>Recurso energético</b>: elemento natural (o producido por las personas) que tiene <b>energía almacenada y aprovechable</b>. Ejemplos: el sol, el viento, el agua de un río, el gas natural, el uranio, la biomasa.</li>
+<li><b>Fuente de energía</b>: <b>sistema que aprovecha un recurso</b> y entrega energía en una forma que podemos usar. Ejemplos: una central eléctrica, un panel solar, una pila.</li>
+<li><b>Proceso de transformación</b>: el cambio de una forma de energía a otra que ocurre dentro de la fuente.</li></ul>
+<div class="box key"><b class="lab">Ejemplo integrador</b>Recurso: <b>gas natural</b> (energía química) › Fuente: <b>central termoeléctrica</b> › Transformación: química → térmica → mecánica → <b>eléctrica</b>.</div>
+<p>Los <b>recursos</b> pueden ser <b>renovables</b> (la naturaleza los repone: sol, viento, agua, biomasa) o <b>no renovables</b> (tardaron millones de años en formarse y se agotan: carbón, petróleo, gas natural, uranio). Una <b>fuente es renovable o no renovable según el recurso que aprovecha</b>: un parque eólico es una fuente renovable; una central a gas, no renovable.</p>
+<div class="box local"><b class="lab">Ojo con otros textos</b>En algunos libros vas a encontrar que al sol o al viento también se los llama “fuentes”. En esta materia los llamamos <b>recursos energéticos</b>, y la <b>fuente</b> es el sistema que los aprovecha.</div>` },
     { tema: "centrales", titulo: "🏭 ¿Qué es una central eléctrica?", html: `
-<p>Una <b>central de generación eléctrica</b> es una instalación que <b>transforma alguna forma de energía en electricidad</b>. Conocimos seis tipos:</p>
-<div class="tblwrap"><table class="tbl"><tr><th>Central</th><th>Fuente que usa</th><th>Medio técnico que la identifica</th></tr>
+<p>Una <b>central de generación eléctrica</b> es una instalación que <b>transforma alguna forma de energía en electricidad</b>. Por eso <b>cada central es una fuente de energía eléctrica</b>: aprovecha un recurso y lo transforma. Conocimos seis tipos:</p>
+<div class="tblwrap"><table class="tbl"><tr><th>Central</th><th>Recurso que aprovecha</th><th>Medio técnico que la identifica</th></tr>
 <tr><td>💧 Hidroeléctrica</td><td>Agua embalsada o de un río</td><td>Presa, embalse, turbina hidráulica</td></tr>
 <tr><td>🔥 Termoeléctrica</td><td>Gas natural, carbón o petróleo</td><td>Caldera, turbina de vapor, chimenea</td></tr>
 <tr><td>⚛️ Nuclear</td><td>Uranio</td><td>Reactor, barras de combustible</td></tr>
@@ -304,8 +306,8 @@ window.NIVELES = [
   interactivo: { tipo: "memo", titulo: "Memotest de conceptos",
     intro: "Dá vuelta dos cartas por turno y encontrá cada concepto con su definición. Practicás sin perder puntos.",
     pares: [
-      ["energia", "Energía", "Capacidad de un cuerpo para realizar un trabajo"],
-      ["energia", "Recurso energético", "Cantidad de energía disponible de una fuente"],
+      ["energia", "Recurso energético", "Elemento con energía almacenada y aprovechable"],
+      ["energia", "Fuente de energía", "Sistema que aprovecha un recurso y entrega energía utilizable"],
       ["centrales", "Central eléctrica", "Instalación que transforma una forma de energía en electricidad"],
       ["centrales", "Generador eléctrico", "Convierte el movimiento de rotación en electricidad"],
       ["sistemas", "Sistema", "Elementos relacionados que funcionan con un objetivo común"],
@@ -314,19 +316,20 @@ window.NIVELES = [
       ["proyecto", "Planificación", "Etapa en la que se ordenan las acciones en el tiempo"]
     ] },
   consejos: {
-    energia: "Repasá las definiciones de energía, fuente y recurso energético, y la diferencia entre fuentes renovables y no renovables.",
-    centrales: "Repasá la tabla de los seis tipos de centrales: qué fuente usa cada una y qué medio técnico la identifica.",
+    energia: "Repasá qué es la energía y la diferencia entre recurso energético (el elemento con energía almacenada) y fuente de energía (el sistema que lo aprovecha), y qué recursos son renovables y no renovables.",
+    centrales: "Repasá la tabla de los seis tipos de centrales: qué recurso aprovecha cada una y qué medio técnico la identifica.",
     sistemas: "Repasá qué es un sistema, qué es un sistema técnico y la definición de cada tipo (mecánico, hidráulico, hídrico, de control, informático, eléctrico).",
     proyecto: "Repasá qué es un proyecto tecnológico y memorizá las siete etapas en orden."
   },
   banco: [
     { t: "mc", tema: "energia", q: "En Tecnología, ¿qué es la energía?", o: ["La capacidad de un cuerpo para realizar un trabajo", "La electricidad que llega a las casas", "Un combustible como el gas", "La fuerza que tiene el viento"], a: 0, e: "La energía es la capacidad de un cuerpo para realizar un trabajo. La electricidad es solo una de sus formas." },
-    { t: "sort", tema: "energia", q: "Clasificá estas fuentes de energía.", b: ["Renovable", "No renovable"], i: [["Viento del Canal Beagle", 0], ["Gas natural", 1], ["Agua del Río Olivia", 0], ["Uranio", 1], ["Restos de poda (biomasa)", 0], ["Petróleo", 1], ["Luz solar", 0], ["Carbón mineral", 1]], e: "Las renovables se reponen naturalmente; las no renovables tardaron millones de años en formarse y se agotan." },
-    { t: "mc", tema: "energia", q: "La cantidad de energía disponible de una fuente se llama…", o: ["Recurso energético", "Energía final", "Fuente alternativa", "Central eléctrica"], a: 0, e: "Recurso energético = cuánta energía hay disponible en una fuente." },
+    { t: "sort", tema: "energia", q: "Clasificá estos recursos energéticos.", b: ["Renovable", "No renovable"], i: [["Viento del Canal Beagle", 0], ["Gas natural", 1], ["Agua del Río Olivia", 0], ["Uranio", 1], ["Restos de poda (biomasa)", 0], ["Petróleo", 1], ["Luz solar", 0], ["Carbón mineral", 1]], e: "Los recursos renovables se reponen naturalmente; los no renovables tardaron millones de años en formarse y se agotan." },
+    { t: "mc", tema: "energia", q: "El elemento natural que tiene energía almacenada y aprovechable, como el gas natural o el viento, se llama…", o: ["Recurso energético", "Fuente de energía", "Central eléctrica", "Energía final"], a: 0, e: "El recurso es el elemento con energía almacenada; la fuente es el sistema que lo aprovecha." },
+    { t: "mc", tema: "energia", q: "¿Una central termoeléctrica es una fuente de energía?", o: ["Sí: es un sistema que aprovecha un recurso (el gas natural) y lo transforma en energía eléctrica", "No: la fuente es solamente el gas natural", "No: porque la construyeron las personas", "Sí: porque crea energía nueva de la nada"], a: 0, e: "La central es la fuente: aprovecha el recurso (gas) y lo transforma en electricidad. No crea energía: la transforma." },
     { t: "mc", tema: "energia", q: "¿Qué forma de energía tiene el viento?", o: ["Mecánica cinética (por su movimiento)", "Química", "Nuclear", "Sonora"], a: 0, e: "El viento es aire en movimiento: tiene energía mecánica cinética." },
-    { t: "sort", tema: "centrales", q: "¿A qué central pertenece cada medio técnico?", b: ["Hidroeléctrica", "Nuclear", "Eólica", "Solar"], i: [["Presa y embalse", 0], ["Turbina hidráulica", 0], ["Reactor", 1], ["Barras de uranio", 1], ["Góndola", 2], ["Aspas y rotor", 2], ["Celdas fotovoltaicas", 3], ["Inversor", 3]], e: "Cada central tiene medios técnicos que la identifican según la fuente que aprovecha." },
+    { t: "sort", tema: "centrales", q: "¿A qué central pertenece cada medio técnico?", b: ["Hidroeléctrica", "Nuclear", "Eólica", "Solar"], i: [["Presa y embalse", 0], ["Turbina hidráulica", 0], ["Reactor", 1], ["Barras de uranio", 1], ["Góndola", 2], ["Aspas y rotor", 2], ["Celdas fotovoltaicas", 3], ["Inversor", 3]], e: "Cada central tiene medios técnicos que la identifican según el recurso que aprovecha." },
     { t: "mc", tema: "centrales", q: "¿Qué es una central de generación eléctrica?", o: ["Una instalación que transforma alguna forma de energía en electricidad", "Un lugar donde se guarda la electricidad", "Una red de cables que llega a las casas", "Una empresa que cobra la luz"], a: 0, e: "Las centrales transforman energía (del agua, el viento, el gas, etc.) en electricidad." },
-    { t: "mc", tema: "centrales", q: "¿Qué fuente de energía usa una central nuclear?", o: ["Uranio", "Gas natural", "Agua de un embalse", "Restos orgánicos"], a: 0, e: "La central nuclear aprovecha la energía liberada al dividir átomos de uranio (fisión)." },
+    { t: "mc", tema: "centrales", q: "¿Qué recurso energético aprovecha una central nuclear?", o: ["Uranio", "Gas natural", "Agua de un embalse", "Restos orgánicos"], a: 0, e: "La central nuclear (la fuente) aprovecha el uranio (el recurso): la energía que se libera al dividir sus átomos (fisión)." },
     { t: "mc", tema: "centrales", q: "Los aerogeneradores son el medio técnico principal de la central…", o: ["Eólica", "Solar", "Hidroeléctrica", "De biomasa"], a: 0, e: "El aerogenerador (torre, aspas, góndola) captura la energía del viento." },
     { t: "mc", tema: "sistemas", q: "¿Qué es un sistema?", o: ["Un conjunto de elementos relacionados que funcionan con un objetivo común", "Una máquina muy grande", "Un grupo de piezas guardadas en una caja", "Un programa de computadora"], a: 0, e: "Lo clave es la relación entre los elementos y el objetivo común." },
     { t: "mc", tema: "sistemas", q: "Los sistemas técnicos son…", o: ["Sistemas creados por el ser humano con fines utilitarios", "Todos los sistemas de la naturaleza", "Solo las computadoras", "Sistemas que no usan energía"], a: 0, e: "Un sistema técnico lo crea el ser humano para resolver una necesidad." },
@@ -380,7 +383,7 @@ window.NIVELES = [
     intro: "Elegí una central y tocá los medios técnicos en el orden en que pasa la energía. Cuidado: hay piezas que no pertenecen a esa central.",
     centrales: [
       { n: "💧 Hidroeléctrica", tr: "Mecánica (potencial del agua) → Eléctrica", c: [["Presa y embalse", "Retiene el agua en altura: guarda energía potencial."], ["Tubería de presión", "Conduce el agua a gran velocidad hacia la turbina."], ["Turbina hidráulica", "El agua la hace girar como un molino gigante."], ["Generador eléctrico", "Convierte el giro en electricidad."], ["Transformador y líneas", "Elevan la tensión y llevan la electricidad a las ciudades."]], x: ["Caldera", "Aspas"] },
-      { n: "🔥 Termoeléctrica", tr: "Química (gas natural) → Térmica → Mecánica → Eléctrica", c: [["Gas natural", "El combustible fósil que guarda energía química."], ["Caldera", "Quema el gas y convierte agua en vapor a alta presión."], ["Turbina de vapor", "El vapor la hace girar."], ["Generador eléctrico", "Convierte el giro en electricidad."], ["Transformador y líneas", "Llevan la electricidad a la red."]], x: ["Reactor", "Inversor"] },
+      { n: "🔥 Termoeléctrica", tr: "Química (gas natural) → Térmica → Mecánica → Eléctrica", c: [["Gas natural", "El recurso energético: un combustible fósil con energía química almacenada."], ["Caldera", "Quema el gas y convierte agua en vapor a alta presión."], ["Turbina de vapor", "El vapor la hace girar."], ["Generador eléctrico", "Convierte el giro en electricidad."], ["Transformador y líneas", "Llevan la electricidad a la red."]], x: ["Reactor", "Inversor"] },
       { n: "⚛️ Nuclear", tr: "Nuclear → Térmica → Mecánica → Eléctrica", c: [["Barras de uranio", "Contienen el combustible nuclear."], ["Reactor", "Allí ocurre la fisión, que libera muchísimo calor."], ["Generador de vapor", "El calor del circuito primario produce vapor en otro circuito."], ["Turbina de vapor", "El vapor la hace girar."], ["Generador eléctrico", "Convierte el giro en electricidad."]], x: ["Caldera de gas", "Aspas"] },
       { n: "🌬️ Eólica", tr: "Mecánica (cinética del viento) → Eléctrica", c: [["Viento", "Aire en movimiento: energía cinética."], ["Aspas y rotor", "El viento las empuja y giran."], ["Caja multiplicadora", "Aumenta la velocidad de giro."], ["Generador eléctrico", "Dentro de la góndola, produce electricidad."], ["Transformador y líneas", "Elevan la tensión para transportarla."]], x: ["Turbina de vapor", "Celdas fotovoltaicas"] },
       { n: "☀️ Solar fotovoltaica", tr: "Luminosa → Eléctrica (sin turbina)", c: [["Luz solar", "Los fotones llegan a los paneles."], ["Celdas fotovoltaicas", "El silicio libera electrones: corriente continua."], ["Inversor", "Convierte la corriente continua en alterna."], ["Medidor", "Registra la energía producida."], ["Red eléctrica", "La electricidad se consume o se envía a la red."]], x: ["Turbina", "Generador giratorio"] },
@@ -397,6 +400,7 @@ window.NIVELES = [
     { t: "mc", tema: "energia", q: "En la cocina de gas de tu casa, la energía se transforma de…", o: ["Química a térmica", "Eléctrica a térmica", "Térmica a química", "Luminosa a térmica"], a: 0, e: "El gas guarda energía química que se libera como calor al quemarse." },
     { t: "sort", tema: "energia", q: "¿En qué energía FINAL termina cada aparato?", b: ["Mecánica", "Térmica", "Luminosa", "Eléctrica"], i: [["Motor eléctrico", 0], ["Motor de combustión", 0], ["Estufa eléctrica", 1], ["Freno (zapata)", 1], ["Lámpara", 2], ["Panel solar", 3], ["Pila", 3]], e: "Mirá la tabla de transformaciones: cada aparato recibe una forma de energía y entrega otra." },
     { t: "tf", tema: "energia", q: "Verdadero o falso: con una máquina muy moderna se puede crear energía de la nada.", a: false, e: "Falso. La energía no se crea ni se destruye: solo se transforma." },
+    { t: "sort", tema: "energia", q: "¿Es un recurso energético o una fuente de energía?", b: ["Recurso energético", "Fuente de energía"], i: [["Gas natural", 0], ["Viento", 0], ["Agua del Río Pipo", 0], ["Uranio", 0], ["Central termoeléctrica", 1], ["Parque eólico", 1], ["Pila", 1], ["Panel solar", 1]], e: "El recurso tiene la energía almacenada; la fuente es el sistema que la aprovecha y la transforma." },
     { t: "mc", tema: "centrales", q: "En casi todas las centrales, ¿qué máquina convierte el movimiento de rotación en electricidad?", o: ["El generador eléctrico", "El transformador", "El inversor", "La caldera"], a: 0, e: "La turbina gira y el generador transforma ese giro en electricidad." },
     { t: "mc", tema: "centrales", q: "En una central nuclear, ¿para qué sirven las barras de control?", o: ["Para regular la velocidad de la reacción de fisión", "Para transportar el uranio", "Para hacer girar la turbina", "Para enfriar el vapor"], a: 0, e: "Las barras de control regulan la reacción en el reactor." },
     { t: "mc", tema: "centrales", q: "¿Qué hace el condensador de una central termoeléctrica?", o: ["Enfría el vapor usado y lo vuelve agua para reutilizarla", "Quema el gas natural", "Produce la electricidad", "Eleva la tensión de la corriente"], a: 0, e: "Gracias al condensador, el agua circula en un ciclo cerrado." },
@@ -421,7 +425,7 @@ window.NIVELES = [
   mision: "Tercera misión: conectar todo. Vas a mirar una central por dentro y descubrir cómo se relacionan la energía, los medios técnicos y los sistemas.",
   lectura: [
     { tema: "energia", titulo: "⚡ Cadenas de transformación en una central", html: `
-<p>Toda central es un <b>proceso de transformación de la energía</b>: parte de una <b>energía primaria</b> (el recurso tal como está en la naturaleza) y llega a una <b>energía final</b> (la electricidad que usás en casa).</p>
+<p>Toda central es una <b>fuente</b> donde ocurre un <b>proceso de transformación de la energía</b>: parte de una <b>energía primaria</b> (la que tiene el recurso tal como está en la naturaleza) y llega a una <b>energía final</b> (la electricidad que usás en casa).</p>
 <p>Ejemplo con la electricidad de Ushuaia:</p>
 <div class="flow"><span>Química (gas natural)</span><i>›</i><span>Térmica (caldera)</span><i>›</i><span>Mecánica (turbina)</span><i>›</i><span>Eléctrica (generador)</span><i>›</i><span>Luminosa (tu lámpara)</span></div>
 <p>En una hidroeléctrica la cadena es más corta: <b>mecánica potencial</b> (agua en altura) → <b>mecánica cinética</b> (agua que cae y turbina que gira) → <b>eléctrica</b>.</p>` },
@@ -462,8 +466,9 @@ window.NIVELES = [
   banco: [
     { t: "order", tema: "energia", q: "Ordená la cadena de transformaciones desde el gas natural hasta la lámpara de tu cuarto.", i: ["Energía química del gas natural", "Energía térmica en la caldera", "Energía mecánica de la turbina", "Energía eléctrica del generador", "Energía luminosa de la lámpara"], e: "Cada medio técnico transforma la energía en otra forma." },
     { t: "mc", tema: "energia", q: "¿Qué transformación ocurre en una central hidroeléctrica?", o: ["Mecánica (potencial del agua) → eléctrica", "Química → eléctrica", "Nuclear → térmica → eléctrica", "Luminosa → eléctrica"], a: 0, e: "El agua en altura tiene energía potencial; al caer mueve la turbina." },
+    { t: "mc", tema: "energia", q: "Una familia del barrio Andorra instala paneles solares en el techo. ¿Qué son los paneles y qué es el sol?", o: ["Los paneles son una fuente de energía renovable y el sol es el recurso energético", "Los paneles son el recurso y el sol es la fuente", "Los dos son recursos energéticos", "Los paneles son una fuente no renovable"], a: 0, e: "El sistema que aprovecha y transforma es la fuente; el elemento con energía es el recurso. Como el sol es renovable, la fuente también." },
     { t: "mc", tema: "energia", q: "El agua del río tal como está en la naturaleza es energía ___; la electricidad que llega a tu casa es energía ___.", o: ["primaria / final", "final / primaria", "renovable / no renovable", "química / térmica"], a: 0, e: "Energía primaria = recurso natural. Energía final = la que usamos después de la transformación." },
-    { t: "mc", tema: "centrales", q: "¿En qué se parecen una central nuclear y una termoeléctrica?", o: ["Las dos usan calor para producir vapor que mueve una turbina", "Las dos queman gas natural", "Las dos usan paneles", "Ninguna tiene generador"], a: 0, e: "Cambia la fuente de calor: fisión del uranio o combustión del gas." },
+    { t: "mc", tema: "centrales", q: "¿En qué se parecen una central nuclear y una termoeléctrica?", o: ["Las dos usan calor para producir vapor que mueve una turbina", "Las dos queman gas natural", "Las dos usan paneles", "Ninguna tiene generador"], a: 0, e: "Cambia el origen del calor: fisión del uranio o combustión del gas." },
     { t: "mc", tema: "centrales", q: "¿Qué central NO tiene turbina ni generador giratorio?", o: ["Solar fotovoltaica", "Eólica", "Hidroeléctrica", "Biomasa"], a: 0, e: "La luz se transforma directamente en electricidad en las celdas fotovoltaicas." },
     { t: "sort", tema: "centrales", q: "Agrupá las centrales según cómo hacen girar la turbina.", b: ["Con vapor (calor)", "Con un fluido en movimiento", "No tiene turbina"], i: [["Termoeléctrica", 0], ["Nuclear", 0], ["Biomasa", 0], ["Hidroeléctrica", 1], ["Eólica", 1], ["Solar fotovoltaica", 2]], e: "Agruparlas así te ayuda a recordar cómo funciona cada una." },
     { t: "order", tema: "centrales", q: "Ordená el funcionamiento de una central eólica.", i: ["El viento empuja las aspas", "Gira el rotor", "La caja multiplicadora aumenta la velocidad", "El generador de la góndola produce electricidad", "El transformador eleva la tensión"], e: "Mecánica (viento) → mecánica (giro) → eléctrica." },
@@ -487,7 +492,7 @@ window.NIVELES = [
   lectura: [
     { tema: "energia", titulo: "⚡ La energía de Ushuaia", html: `
 <p>En Tierra del Fuego la electricidad la genera y distribuye la <b>SPSE</b> (Servicios Públicos Sociedad del Estado), en gran parte con <b>centrales termoeléctricas a gas natural</b>, un recurso de la provincia.</p>
-<p>Las fuentes también se clasifican con otros criterios:</p>
+<p>Las fuentes (las centrales) también se clasifican con otros criterios, según el recurso que aprovechan:</p>
 <ul><li>Por su uso: <b>convencionales</b> (las más usadas, como los combustibles fósiles) y <b>no convencionales o alternativas</b> (las que están empezando a desarrollarse).</li>
 <li>Por su impacto ambiental: <b>limpias</b> (impacto mínimo, sin residuos tóxicos) y <b>contaminantes</b>.</li></ul>
 <div class="box local"><b class="lab">Recursos de nuestra ciudad</b><b>Viento</b> fuerte y frecuente en la costa del Canal Beagle · <b>ríos de montaña</b> con caudal permanente (Río Olivia, Río Pipo) · <b>gas natural</b> · <b>poco sol</b> en invierno, con días muy cortos.</div>` },
@@ -528,15 +533,15 @@ window.NIVELES = [
       { s: 6, tx: "Probamos con un ventilador: el LED enciende, pero muy poco. Decidimos agrandar las aspas.", ex: "Comprobar si funciona y mejorarlo es evaluación y perfeccionamiento." }
     ] },
   consejos: {
-    energia: "Repasá los recursos energéticos de Ushuaia y los criterios de clasificación de las fuentes (renovable/no renovable, convencional/alternativa, limpia/contaminante).",
+    energia: "Repasá los recursos energéticos de Ushuaia y cómo se clasifican las fuentes según el recurso que aprovechan (renovable/no renovable, convencional/alternativa, limpia/contaminante).",
     centrales: "Repasá las ventajas y desventajas de cada central y por qué algunas convienen más que otras en Ushuaia.",
     sistemas: "Repasá el análisis del aerogenerador: qué parte corresponde a cada sistema técnico y su diagrama de bloques.",
     proyecto: "Repasá la bitácora del parque eólico: practicá aplicar las etapas a un problema real de la ciudad."
   },
   banco: [
-    { t: "mc", tema: "energia", q: "El gas natural con el que se genera gran parte de la electricidad de Ushuaia es una fuente…", o: ["No renovable, convencional y contaminante", "Renovable, alternativa y limpia", "Renovable y convencional", "No renovable y limpia"], a: 0, e: "Se agota, es de las más usadas y su combustión emite CO₂." },
-    { t: "sort", tema: "energia", q: "Clasificá estas fuentes de Ushuaia según su impacto ambiental.", b: ["Limpia", "Contaminante"], i: [["Viento del Canal Beagle", 0], ["Agua del Río Pipo", 0], ["Gas natural", 1], ["Gasoil de los generadores de emergencia", 1]], e: "Las limpias producen impacto mínimo y no generan residuos tóxicos." },
-    { t: "mc", tema: "energia", q: "Si se aprovecha el agua del Río Pipo con una pequeña central, ¿qué tipo de fuente y de energía se usa?", o: ["Renovable; energía mecánica del agua en movimiento", "No renovable; energía química", "Renovable; energía luminosa", "No renovable; energía nuclear"], a: 0, e: "El agua del río se repone y su movimiento es energía mecánica." },
+    { t: "mc", tema: "energia", q: "La central termoeléctrica a gas que abastece a gran parte de Ushuaia, como fuente de energía, es…", o: ["No renovable, convencional y contaminante", "Renovable, alternativa y limpia", "Renovable y convencional", "No renovable y limpia"], a: 0, e: "Aprovecha un recurso que se agota (gas natural), es de las más usadas y su combustión emite CO₂." },
+    { t: "sort", tema: "energia", q: "Clasificá estas fuentes de energía para Ushuaia según su impacto ambiental.", b: ["Limpia", "Contaminante"], i: [["Parque eólico en la costa del Canal Beagle", 0], ["Mini central en el Río Pipo", 0], ["Central termoeléctrica a gas", 1], ["Generadores de emergencia a gasoil", 1]], e: "Las fuentes limpias producen impacto mínimo y no generan residuos tóxicos." },
+    { t: "mc", tema: "energia", q: "Si se construye una pequeña central en el Río Pipo, ¿cuál es el recurso y qué tipo de fuente sería?", o: ["El recurso es el agua del río (energía mecánica) y la central sería una fuente renovable", "El recurso es la central y la fuente es el río", "El recurso es el gas natural y la fuente es no renovable", "El recurso es el agua y la fuente sería no renovable"], a: 0, e: "El agua del río se repone: es un recurso renovable, por eso la central que la aprovecha es una fuente renovable." },
     { t: "mc", tema: "centrales", q: "¿Por qué la energía eólica es prometedora en Ushuaia y la solar tiene limitaciones?", o: ["Hay viento fuerte y frecuente todo el año, pero pocas horas de sol en invierno", "Porque los paneles no funcionan con frío", "Porque el viento no se agota y el sol sí", "Porque la eólica no necesita generador"], a: 0, e: "Hay que mirar los recursos del lugar para elegir la central." },
     { t: "mc", tema: "centrales", q: "Un día de invierno casi sin viento, ¿qué central asegura el suministro en Ushuaia?", o: ["La termoeléctrica a gas, que funciona las 24 horas sin depender del clima", "La solar", "La eólica", "Ninguna"], a: 0, e: "Por eso las renovables se combinan con centrales que funcionan de forma continua." },
     { t: "mc", tema: "centrales", q: "Alguien propone instalar una central nuclear en Ushuaia. ¿Cuál es una desventaja importante?", o: ["Produce residuos radiactivos de muy difícil gestión y es muy costosa", "Emite mucho CO₂", "Solo funciona de día", "Necesita mucho viento"], a: 0, e: "No emite CO₂ al operar, pero sus residuos y su costo son grandes desventajas." },
@@ -841,7 +846,7 @@ window.NIVELES = [
     if (c.c[prog][0] === nm) {
       e.prog[ci] = prog + 1; e.msg = ["ok", "✅ " + esc(c.c[prog][1])]; chime(true);
       if (prog + 1 === c.c.length) { e.done[ci] = true; if (Object.keys(e.done).length === it.centrales.length) sync("progreso"); }
-    } else if (c.x.includes(nm)) { e.msg = ["bad", "❌ <b>" + esc(nm) + "</b> no pertenece a esta central. Pensá qué fuente de energía usa."]; chime(false); if (el) el.classList.add("shake"); }
+    } else if (c.x.includes(nm)) { e.msg = ["bad", "❌ <b>" + esc(nm) + "</b> no pertenece a esta central. Pensá qué recurso energético aprovecha."]; chime(false); if (el) el.classList.add("shake"); }
     else { e.msg = ["warn", "🤔 <b>" + esc(nm) + "</b> sí es de esta central, pero todavía no le toca. ¿Por dónde pasa la energía antes?"]; chime(false); }
     save(); setTimeout(render, el && el.classList.contains("shake") ? 300 : 0);
   }
